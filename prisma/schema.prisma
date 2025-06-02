@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // ou "postgresql", "mysql", dependendo do seu caso
+  url      = env("DATABASE_URL")
+}
+
+model Ambiente {
+  id    Int     @id @default(autoincrement())
+  nome  String  @unique
+  local String?
+
+  pmocs PMOC[] @relation("AmbientePMOC")
+}
+
+model Servico {
+  id   Int    @id @default(autoincrement())
+  nome String
+
+  pmocs      PMOC[]      @relation("ServicoPMOC")
+  checklists Checklist[]
+}
+
+model PMOC {
+  id                   Int    @id @default(autoincrement())
+  nomeAmbiente         String
+  endereco             String
+  numero               String
+  bairro               String
+  cidade               String
+  uf                   String
+  telefone             String
+  nomeProprietario     String
+  cgcProprietario      String
+  enderecoProprietario String
+  nomeResponsavel      String
+  cgcResponsavel       String
+  conselho             String
+  art                  String
+
+  ambienteId Int?
+  servicoId  Int?
+
+  ambiente Ambiente? @relation("AmbientePMOC", fields: [ambienteId], references: [id])
+  servico  Servico?  @relation("ServicoPMOC", fields: [servicoId], references: [id])
+
+  checklist Checklist[]
+
+  criadoEm DateTime @default(now())
+}
+
+model Checklist {
+  id            Int       @id @default(autoincrement())
+  descricao     String
+  periodicidade String
+  dataExecucao  DateTime?
+  executadoPor  String?
+  aprovadoPor   String?
+
+  pmocId    Int
+  servicoId Int?
+
+  pmoc    PMOC     @relation(fields: [pmocId], references: [id])
+  servico Servico? @relation(fields: [servicoId], references: [id])
+}
+
+model Tag {
+  id       Int    @id @default(autoincrement())
+  tag      String
+  unidade  String
+  local    String
+}
