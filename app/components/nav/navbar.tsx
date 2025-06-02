@@ -75,6 +75,18 @@ const SidebarPMOC = () => {
             </a>
           </Link>
         </li>
+        <li>
+          <button
+            onClick={() => {
+              localStorage.removeItem("pmoc_auth");
+              window.location.href = "/";
+            }}
+            className="text-sm text-center flex items-center text-red-600 mt-4"
+          >
+            Sair
+          </button>
+
+        </li>
       </ul>
     </div>
   );
