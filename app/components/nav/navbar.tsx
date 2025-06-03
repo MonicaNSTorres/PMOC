@@ -36,43 +36,53 @@ const SidebarPMOC = () => {
       </button>
       <ul className="flex-1 space-y-4 p-4">
         <li>
-          <Link href="/pmoc-form" legacyBehavior>
-            <a onClick={closeSidebar} className={`flex items-center space-x-4 p-3 rounded-md transition-colors duration-200 hover:text-white ${isActive("/pmoc-form")}`}>
-              <FaClipboardList className="text-2xl" />
-              {isOpen && <span>Formulário PMOC</span>}
-            </a>
+          <Link
+            href="/pmoc-form"
+            onClick={closeSidebar}
+            className={`flex items-center space-x-4 p-3 rounded-md transition-colors duration-200 hover:text-white ${isActive("/pmoc-form")}`}
+          >
+            <FaClipboardList className="text-2xl" />
+            {isOpen && <span>Formulário PMOC</span>}
           </Link>
         </li>
         <li>
-          <Link href="/pmoc-list" legacyBehavior>
-            <a onClick={closeSidebar} className={`flex items-center space-x-4 p-3 rounded-md transition-colors duration-200 hover:text-white ${isActive("/pmoc-list")}`}>
-              <FaClipboardCheck className="text-2xl" />
-              {isOpen && <span>Listagem PMOC</span>}
-            </a>
+          <Link
+            href="/pmoc-list"
+            onClick={closeSidebar}
+            className={`flex items-center space-x-4 p-3 rounded-md transition-colors duration-200 hover:text-white ${isActive("/pmoc-list")}`}
+          >
+            <FaClipboardCheck className="text-2xl" />
+            {isOpen && <span>Listagem PMOC</span>}
           </Link>
         </li>
         <li>
-          <Link href="/tags" legacyBehavior>
-            <a onClick={closeSidebar} className={`flex items-center space-x-4 p-3 rounded-md transition-colors duration-200 hover:text-white ${isActive("/tags")}`}>
-              <FaTags className="text-2xl" />
-              {isOpen && <span>Tags</span>}
-            </a>
+          <Link
+            href="/tags"
+            onClick={closeSidebar}
+            className={`flex items-center space-x-4 p-3 rounded-md transition-colors duration-200 hover:text-white ${isActive("/tags")}`}
+          >
+            <FaTags className="text-2xl" />
+            {isOpen && <span>Tags</span>}
           </Link>
         </li>
         <li>
-          <Link href="/servicos" legacyBehavior>
-            <a onClick={closeSidebar} className={`flex items-center space-x-4 p-3 rounded-md transition-colors duration-200 hover:text-white ${isActive("/servicos")}`}>
-              <FaCogs className="text-2xl" />
-              {isOpen && <span>Serviços</span>}
-            </a>
+          <Link
+            href="/servicos"
+            onClick={closeSidebar}
+            className={`flex items-center space-x-4 p-3 rounded-md transition-colors duration-200 hover:text-white ${isActive("/servicos")}`}
+          >
+            <FaCogs className="text-2xl" />
+            {isOpen && <span>Serviços</span>}
           </Link>
         </li>
         <li>
-          <Link href="/ambientes" legacyBehavior>
-            <a onClick={closeSidebar} className={`flex items-center space-x-4 p-3 rounded-md transition-colors duration-200 hover:text-white ${isActive("/ambientes")}`}>
-              <FaMapMarkedAlt className="text-2xl" />
-              {isOpen && <span>Ambientes</span>}
-            </a>
+          <Link
+            href="/ambientes"
+            onClick={closeSidebar}
+            className={`flex items-center space-x-4 p-3 rounded-md transition-colors duration-200 hover:text-white ${isActive("/ambientes")}`}
+          >
+            <FaMapMarkedAlt className="text-2xl" />
+            {isOpen && <span>Ambientes</span>}
           </Link>
         </li>
         <li>
@@ -85,7 +95,6 @@ const SidebarPMOC = () => {
           >
             Sair
           </button>
-
         </li>
       </ul>
     </div>

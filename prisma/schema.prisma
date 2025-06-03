@@ -17,7 +17,7 @@ model Ambiente {
 
 model Servico {
   id   Int    @id @default(autoincrement())
-  nome String
+  nome String @unique
 
   pmocs      PMOC[]      @relation("ServicoPMOC")
   checklists Checklist[]
