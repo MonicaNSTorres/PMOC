@@ -42,14 +42,25 @@ model PMOC {
 
   ambienteId Int?
   servicoId  Int?
+  tagId      Int?
 
   ambiente Ambiente? @relation("AmbientePMOC", fields: [ambienteId], references: [id])
   servico  Servico?  @relation("ServicoPMOC", fields: [servicoId], references: [id])
+  tag      Tag?      @relation("TagPMOC", fields: [tagId], references: [id])
 
   checklist Checklist[]
 
   criadoEm DateTime @default(now())
 }
+
+model Tag {
+  id       Int    @id @default(autoincrement())
+  tag      String @unique
+  unidade  String
+  local    String
+  pmocs    PMOC[] @relation("TagPMOC")
+}
+
 
 model Checklist {
   id            Int       @id @default(autoincrement())
@@ -64,11 +75,4 @@ model Checklist {
 
   pmoc    PMOC     @relation(fields: [pmocId], references: [id])
   servico Servico? @relation(fields: [servicoId], references: [id])
-}
-
-model Tag {
-  id       Int    @id @default(autoincrement())
-  tag      String
-  unidade  String
-  local    String
 }

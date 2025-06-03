@@ -5,7 +5,11 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   const ambientes = await prisma.ambiente.findMany({
-    select: { nome: true },
+    select: {
+      id: true,
+      nome: true,
+    },
   });
-  return NextResponse.json(ambientes.map((a) => a.nome));
+
+  return NextResponse.json(ambientes);
 }

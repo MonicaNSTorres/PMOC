@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
@@ -13,6 +12,23 @@ export async function PUT(req: NextRequest) {
   }
 
   try {
+    const ambiente = await prisma.ambiente.findUnique({
+      where: { id: Number(data.ambienteSelecionado) },
+    });
+
+    let tag = null;
+
+    if (data.tagSelecionada && !isNaN(Number(data.tagSelecionada))) {
+      tag = await prisma.tag.findUnique({
+        where: { id: Number(data.tagSelecionada) },
+      });
+    }
+
+
+    const tagId = data.tagSelecionada && !isNaN(Number(data.tagSelecionada))
+      ? Number(data.tagSelecionada)
+      : null;
+
     const pmocAtualizado = await prisma.pMOC.update({
       where: { id },
       data: {
@@ -30,8 +46,11 @@ export async function PUT(req: NextRequest) {
         cgcResponsavel: data.cgcResponsavel,
         conselho: data.conselho,
         art: data.art,
+        ambienteId: data.ambienteSelecionado ? Number(data.ambienteSelecionado) : null,
+        tagId: tag ? tag.id : null,
       },
     });
+
 
     if (Array.isArray(data.checklist)) {
       await prisma.checklist.deleteMany({

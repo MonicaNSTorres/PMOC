@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import BackButton from "../components/back-button/back-button";
 
 type ChecklistItem = {
-    descricao: string;
+    descricao: string | number;
     periodicidade: string;
     data: string;
     executadoPor: string;
@@ -16,7 +16,7 @@ type ChecklistItem = {
 
 export default function PMOCForm() {
     const [ambientes, setAmbientes] = useState<string[]>([]);
-    const [servicos, setServicos] = useState<string[]>([]);
+    const [servicos, setServicos] = useState<{ id: number; nome: string }[]>([]);
     const [tags, setTags] = useState<{ id: number; tag: string; unidade: string; local: string }[]>([]);
     const router = useRouter();
     const [checklist, setChecklist] = useState<ChecklistItem[]>([
@@ -159,39 +159,36 @@ export default function PMOCForm() {
                     <section>
                         <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">4 - Ambientes Climatizados</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <select name="ambienteSelecionado" value={formData.ambienteSelecionado} onChange={handleChange} className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400">
+                            <select
+                                name="ambienteSelecionado"
+                                value={formData.ambienteSelecionado}
+                                onChange={handleChange}
+                                className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400"
+                            >
                                 <option value="">Selecione um ambiente</option>
-                                {ambientes.map((amb, i) => <option key={i} value={amb}>{amb}</option>)}
+                                {ambientes.map((amb) => (
+                                    <option key={amb.id} value={amb.id}>
+                                        {amb.nome}
+                                    </option>
+                                ))}
+
+
                             </select>
-                            {/*<select name="servicoSelecionado" value={formData.servicoSelecionado} onChange={handleChange} className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400">
-                                <option value="">Selecione um serviço</option>
-                                {servicos.map((srv, i) => <option key={i} value={srv}>{srv}</option>)}
-                            </select>*/}
+
+
                             <select name="tagSelecionada" value={formData.tagSelecionada} onChange={handleChange} className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400">
                                 <option value="">Selecione uma TAG</option>
-                                {tags.map((tag, i) => <option key={i} value={tag}>{tag}</option>)}
+                                {tags.map((tag) => (
+                                    <option key={tag.id} value={tag.id}>
+                                        {tag.tag}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                     </section>
 
                     <section>
                         <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">5 - Plano de Manutenção e Controle</h3>
-                        {/*<div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Serviço</label>
-                            <select
-                                name="servicoSelecionado"
-                                value={formData.servicoSelecionado}
-                                onChange={handleChange}
-                                className="w-full border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400"
-                            >
-                                <option value="">Selecione um serviço</option>
-                                {servicos.map((srv, i) => (
-                                    <option key={i} value={srv}>
-                                        {srv}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>*/}
                         <div className="overflow-auto rounded-lg shadow-md">
                             <table className="w-full text-md border-collapse">
                                 <thead className="bg-blue-100 text-gray-700">
@@ -213,9 +210,10 @@ export default function PMOCForm() {
                                                     onChange={(e) => handleChecklistChange(index, "descricao", e.target.value)}
                                                 >
                                                     <option value="">Selecione um serviço</option>
-                                                    {servicos.map((srv, i) => (
-                                                        <option key={i} value={srv}>
-                                                            {srv}
+
+                                                    {servicos.map((srv) => (
+                                                        <option key={srv.id} value={srv.id}>
+                                                            {srv.nome}
                                                         </option>
                                                     ))}
                                                 </select>

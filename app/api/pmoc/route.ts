@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
     const pmoc = await prisma.pMOC.findUnique({
       where: { id },
       include: {
+        tag: true,
         checklist: {
           orderBy: { id: "asc" },
         },
@@ -25,7 +26,10 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "PMOC não encontrado" }, { status: 404 });
     }
 
-    return NextResponse.json(pmoc);
+    return NextResponse.json({
+      ...pmoc,
+      tagSelecionada: pmoc.tag?.id?.toString() || "",
+    });
   } catch (error) {
     console.error("Erro ao buscar PMOC:", error);
     return NextResponse.json({ error: "Erro ao buscar PMOC" }, { status: 500 });
