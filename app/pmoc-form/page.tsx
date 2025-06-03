@@ -163,10 +163,10 @@ export default function PMOCForm() {
                                 <option value="">Selecione um ambiente</option>
                                 {ambientes.map((amb, i) => <option key={i} value={amb}>{amb}</option>)}
                             </select>
-                            <select name="servicoSelecionado" value={formData.servicoSelecionado} onChange={handleChange} className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400">
+                            {/*<select name="servicoSelecionado" value={formData.servicoSelecionado} onChange={handleChange} className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400">
                                 <option value="">Selecione um serviço</option>
                                 {servicos.map((srv, i) => <option key={i} value={srv}>{srv}</option>)}
-                            </select>
+                            </select>*/}
                             <select name="tagSelecionada" value={formData.tagSelecionada} onChange={handleChange} className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400">
                                 <option value="">Selecione uma TAG</option>
                                 {tags.map((tag, i) => <option key={i} value={tag}>{tag}</option>)}
@@ -176,8 +176,24 @@ export default function PMOCForm() {
 
                     <section>
                         <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">5 - Plano de Manutenção e Controle</h3>
+                        {/*<div className="mb-4">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Serviço</label>
+                            <select
+                                name="servicoSelecionado"
+                                value={formData.servicoSelecionado}
+                                onChange={handleChange}
+                                className="w-full border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400"
+                            >
+                                <option value="">Selecione um serviço</option>
+                                {servicos.map((srv, i) => (
+                                    <option key={i} value={srv}>
+                                        {srv}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>*/}
                         <div className="overflow-auto rounded-lg shadow-md">
-                            <table className="w-full text-sm border-collapse">
+                            <table className="w-full text-md border-collapse">
                                 <thead className="bg-blue-100 text-gray-700">
                                     <tr>
                                         <th className="border p-3">Descrição</th>
@@ -190,7 +206,21 @@ export default function PMOCForm() {
                                 <tbody>
                                     {checklist.map((item, index) => (
                                         <tr key={index} className="odd:bg-white even:bg-gray-50 hover:bg-gray-100">
-                                            <td className="border p-2">{item.descricao}</td>
+                                            <td className="border p-2">
+                                                <select
+                                                    className="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-400"
+                                                    value={item.descricao}
+                                                    onChange={(e) => handleChecklistChange(index, "descricao", e.target.value)}
+                                                >
+                                                    <option value="">Selecione um serviço</option>
+                                                    {servicos.map((srv, i) => (
+                                                        <option key={i} value={srv}>
+                                                            {srv}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </td>
+
                                             <td className="border p-2">{item.periodicidade}</td>
                                             <td className="border p-2">
                                                 <input type="date" className="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-400" value={item.data} onChange={(e) => handleChecklistChange(index, "data", e.target.value)} />

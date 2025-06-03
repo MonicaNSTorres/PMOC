@@ -23,7 +23,7 @@ const SidebarPMOC = () => {
   if (!isClient) return null;
 
   return (
-    <div className={`${isOpen ? "w-64" : "w-20"} bg-gray-900 text-gray-400 flex flex-col transition-all duration-300 h-screen`}>
+    <div className={`${isOpen ? "w-64" : "w-20"} bg-gray-900 text-gray-400 flex flex-col transition-all duration-300 h-screen fixed`}>
       <div className="flex justify-center items-center p-4">
         {/*{isOpen ? (
           <div className={`${styles.logo} flex justify-center`} />
