@@ -20,9 +20,9 @@ export default function Home() {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="flex items-center justify-center h-screen bg-gray-200">
       <form onSubmit={handleLogin} className="bg-white p-6 rounded shadow-md w-full max-w-sm space-y-4">
-        <h2 className="text-xl font-bold text-center">Login PMOC</h2>
+        <h2 className="text-xl font-bold text-center">Login PMOC - AMG</h2>
         <input
           type="email"
           placeholder="E-mail"
@@ -41,7 +41,7 @@ export default function Home() {
         />
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          className="w-full bg-blue-800 text-white font-semibold py-2 rounded hover:bg-blue-600 cursor-pointer"
         >
           Entrar
         </button>

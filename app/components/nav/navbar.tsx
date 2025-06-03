@@ -81,7 +81,7 @@ const SidebarPMOC = () => {
               localStorage.removeItem("pmoc_auth");
               window.location.href = "/";
             }}
-            className="text-sm text-center flex items-center text-red-600 mt-4"
+            className="flex text-sm text-center items-center text-red-800 mt-4 font-semibold hover:text-red-600 hover:cursor-pointer"
           >
             Sair
           </button>

@@ -67,58 +67,59 @@ export default function ListaPMOC() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow-lg mt-8 mb-8">
-      <BackButton />
-      <h1 className="text-2xl font-bold mb-6">PMOCs Cadastrados</h1>
-      <div className="overflow-auto">
-        <table className="w-full text-md border bg-white shadow-md">
-          <thead className="text-gray-700 bg-blue-100">
-            <tr>
-              <th className="border p-2 text-left">Código</th>
-              <th className="border p-2 text-left">Nome do Ambiente</th>
-              <th className="border p-2 text-left">Cidade/UF</th>
-              <th className="border p-2 text-left">Data Cadastro</th>
-              <th className="border p-2 text-left">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pmocs.map((pmoc) => (
-              <tr key={pmoc.id} className="border-t">
-                <td className="border p-2">{pmoc.id}</td>
-                <td className="border p-2">{pmoc.nomeAmbiente}</td>
-                <td className="border p-2">{pmoc.cidade} / {pmoc.uf}</td>
-                <td className="border p-2">{new Date(pmoc.criadoEm).toLocaleDateString()}</td>
-                <td className="p-2 flex gap-2">
-                  <button onClick={() => abrirEdicao(pmoc)} className="text-blue-800 hover:text-blue-600">
-                    <Pencil size={20} />
-                  </button>
-                  <button onClick={() => handleDelete(pmoc.id)} className="text-red-800 hover:text-red-600">
-                    <Trash2 size={20} />
-                  </button>
-                </td>
+    <div className="flex flex-col pl-[9%] pr-[10%] min-h-screen bg-gray-200 p-4">
+      <div className="max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
+        <BackButton />
+        <h1 className="text-2xl font-bold mb-6">PMOCs Cadastrados</h1>
+        <div className="overflow-auto">
+          <table className="w-full text-md border bg-white shadow-md">
+            <thead className="text-gray-700 bg-blue-100">
+              <tr>
+                <th className="border p-2 text-left">Código</th>
+                <th className="border p-2 text-left">Nome do Ambiente</th>
+                <th className="border p-2 text-left">Cidade/UF</th>
+                <th className="border p-2 text-left">Data Cadastro</th>
+                <th className="border p-2 text-left">Ações</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {editingId && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 overflow-y-auto">
-          <div className="bg-white p-6 rounded shadow max-w-4xl w-full">
-            <h2 className="text-xl font-semibold mb-4">Editar PMOC #{editingId}</h2>
-            <PMOCFormEditable
-              initialData={formEdit}
-              onCancel={() => setEditingId(null)}
-              onSave={async (data) => {
-                await axios.put(`/api/editar-pmoc?id=${editingId}`, data);
-                setEditingId(null);
-                fetchPmocs();
-              }}
-            />
-          </div>
+            </thead>
+            <tbody>
+              {pmocs.map((pmoc) => (
+                <tr key={pmoc.id} className="border-t">
+                  <td className="border p-2">{pmoc.id}</td>
+                  <td className="border p-2">{pmoc.nomeAmbiente}</td>
+                  <td className="border p-2">{pmoc.cidade} / {pmoc.uf}</td>
+                  <td className="border p-2">{new Date(pmoc.criadoEm).toLocaleDateString()}</td>
+                  <td className="p-2 flex gap-2">
+                    <button onClick={() => abrirEdicao(pmoc)} className="text-blue-800 hover:text-blue-600">
+                      <Pencil size={20} />
+                    </button>
+                    <button onClick={() => handleDelete(pmoc.id)} className="text-red-800 hover:text-red-600">
+                      <Trash2 size={20} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      )}
 
+        {editingId && (
+          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 overflow-y-auto">
+            <div className="bg-white p-6 rounded shadow max-w-4xl w-full">
+              <h2 className="text-xl font-semibold mb-4">Editar PMOC #{editingId}</h2>
+              <PMOCFormEditable
+                initialData={formEdit}
+                onCancel={() => setEditingId(null)}
+                onSave={async (data) => {
+                  await axios.put(`/api/editar-pmoc?id=${editingId}`, data);
+                  setEditingId(null);
+                  fetchPmocs();
+                }}
+              />
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
