@@ -90,11 +90,11 @@ export default function ListaPMOC() {
                   <td className="border p-2">{pmoc.cidade} / {pmoc.uf}</td>
                   <td className="border p-2">{new Date(pmoc.criadoEm).toLocaleDateString()}</td>
                   <td className="p-2 flex gap-2">
-                    <button onClick={() => abrirEdicao(pmoc)} className="text-blue-800 hover:text-blue-600">
-                      <Pencil size={20} />
+                    <button onClick={() => abrirEdicao(pmoc)} className="text-blue-800 hover:text-blue-600 cursor-pointer">
+                      <Pencil size={22} />
                     </button>
-                    <button onClick={() => handleDelete(pmoc.id)} className="text-red-800 hover:text-red-600">
-                      <Trash2 size={20} />
+                    <button onClick={() => handleDelete(pmoc.id)} className="text-red-800 hover:text-red-600 cursor-pointer">
+                      <Trash2 size={22} />
                     </button>
                   </td>
                 </tr>

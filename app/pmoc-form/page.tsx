@@ -19,6 +19,7 @@ export default function PMOCForm() {
     const [servicos, setServicos] = useState<{ id: number; nome: string }[]>([]);
     const [tags, setTags] = useState<{ id: number; tag: string; unidade: string; local: string }[]>([]);
     const router = useRouter();
+    const [dataAtual, setDataAtual] = useState("");
     const [checklist, setChecklist] = useState<ChecklistItem[]>([
         {
             descricao: "Verificar sujeira, danos e corrosão",
@@ -113,13 +114,29 @@ export default function PMOCForm() {
         }
     }
 
+    useEffect(() => {
+        const hoje = new Date();
+        const dataFormatada = hoje.toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        });
+        setDataAtual(dataFormatada);
+    }, []);
 
 
     return (
         <div className="flex flex-col pl-[9%] pr-[10%] min-h-screen bg-gray-200 p-4">
             <div className="max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
                 <BackButton />
-                <h2 className="text-3xl font-bold mb-10 text-center text-gray-800">Plano de Manutenção, Operação e Controle - PMOC</h2>
+                <div className="flex justify-between items-center mb-2">
+                    <div></div>{/*espaco vazio para alinhar a direita*/}
+                    <span className="text-md text-gray-700 font-semibold">{`Data da geração: ${dataAtual}`}</span>
+                </div>
+                <h2 className="text-3xl font-bold mb-10 text-center text-gray-800">
+                    Plano de Manutenção, Operação e Controle - PMOC
+                </h2>
+
                 <form onSubmit={handleSubmit} className="space-y-12">
 
                     <section>
@@ -240,7 +257,7 @@ export default function PMOCForm() {
                     </section>
 
                     <div className="pt-6 text-center">
-                        <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md transition shadow-md">
+                        <button type="submit" className="bg-blue-800 hover:bg-blue-600 cursor-pointer text-white font-semibold py-3 px-6 rounded-md transition shadow-md">
                             Salvar PMOC
                         </button>
                     </div>

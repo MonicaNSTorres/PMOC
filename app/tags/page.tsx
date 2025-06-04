@@ -67,7 +67,7 @@ export default function ListaTags() {
               setFormEdit({ tag: "", unidade: "", local: "" });
               setShowCreateModal(true);
             }}
-            className="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2"
+            className="bg-green-800 hover:bg-green-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center gap-2"
           >
             <Plus size={18} /> Cadastrar TAG
           </button>
@@ -89,11 +89,11 @@ export default function ListaTags() {
                 <td className="border p-2">{tag.unidade}</td>
                 <td className="border p-2">{tag.local}</td>
                 <td className="border p-2 flex gap-2">
-                  <button onClick={() => abrirEdicao(tag)} className="text-blue-600">
-                    <Pencil size={18} />
+                  <button onClick={() => abrirEdicao(tag)} className="text-blue-800 hover:text-blue-600 cursor-pointer">
+                    <Pencil size={22} />
                   </button>
-                  <button onClick={() => handleDelete(tag.id!)} className="text-red-600">
-                    <Trash2 size={18} />
+                  <button onClick={() => handleDelete(tag.id!)} className="text-red-800 hover:text-red-600 cursor-pointer">
+                    <Trash2 size={22} />
                   </button>
                 </td>
               </tr>

@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import autoTable from "jspdf-autotable";
 import { X } from "lucide-react";
 
@@ -22,36 +21,57 @@ interface Props {
 }
 
 export default function PMOCFormEditable({ initialData, onCancel, onSave }: Props) {
-  useEffect(() => {
-    console.log("initialData recebido:", initialData);
-  }, []);
-
   const [formData, setFormData] = useState({
-    ...initialData,
-    tagSelecionada: initialData?.tagId != null ? String(initialData.tagId) : "",
-    ambienteSelecionado: initialData?.ambienteId != null ? String(initialData.ambienteId) : "",
+    nomeAmbiente: "",
+    endereco: "",
+    numero: "",
+    bairro: "",
+    cidade: "",
+    uf: "",
+    telefone: "",
+    nomeProprietario: "",
+    cgcProprietario: "",
+    enderecoProprietario: "",
+    nomeResponsavel: "",
+    cgcResponsavel: "",
+    conselho: "",
+    art: "",
+    tagSelecionada: "",
+    ambienteSelecionado: "",
+    servicoSelecionado: "",
   });
 
 
 
   const [checklist, setChecklist] = useState<ChecklistItem[]>([]);
-  const [ambientes, setAmbientes] = useState<any[]>([]);
-  const [servicos, setServicos] = useState<string[]>([]);
+  const [servicos, setServicos] = useState<{ id: number; nome: string }[]>([]);
   const [tags, setTags] = useState<{ id: number; tag: string; unidade: string; local: string }[]>([]);
+  const [ambientes, setAmbientes] = useState<{ id: number; nome: string }[]>([]);
   const modalRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    console.log("formData.ambienteSelecionado:", formData.ambienteSelecionado);
+    console.log("formData.tagSelecionada:", formData.tagSelecionada);
+    console.log("ambientes disponíveis:", ambientes);
+    console.log("tags disponíveis:", tags);
+  }, [formData, ambientes, tags]);
 
   useEffect(() => {
-    const checklistFormatado = (initialData.checklist || []).map((item: any) => ({
-      descricao: item.descricao,
-      periodicidade: item.periodicidade,
-      data: item.dataExecucao ? item.dataExecucao.split("T")[0] : "",
-      executadoPor: item.executadoPor,
-      aprovadoPor: item.aprovadoPor,
-    }));
+    if (servicos.length > 0 && initialData?.checklist) {
+      const checklistFormatado = initialData.checklist.map((item: any): ChecklistItem => {
+        const servico = servicos.find(s => String(s.id) === String(item.descricao));
+        return {
+          descricao: servico ? servico.nome : item.descricao,
+          periodicidade: item.periodicidade,
+          data: item.dataExecucao ? item.dataExecucao.split("T")[0] : "",
+          executadoPor: item.executadoPor,
+          aprovadoPor: item.aprovadoPor,
+        };
+      });
 
-    setChecklist(checklistFormatado);
-  }, [initialData]);
+      setChecklist(checklistFormatado);
+    }
+  }, [servicos, initialData]);
 
   useEffect(() => {
     async function fetchSelects() {
@@ -68,6 +88,35 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
   }, []);
 
 
+  useEffect(() => {
+    if (initialData && tags.length > 0 && ambientes.length > 0) {
+      const ambienteExiste = ambientes.some(a => String(a.id) === String(initialData.ambienteId));
+      const tagExiste = tags.some(t => String(t.id) === String(initialData.tagId));
+
+      setFormData({
+        nomeAmbiente: initialData.nomeAmbiente || "",
+        endereco: initialData.endereco || "",
+        numero: initialData.numero || "",
+        bairro: initialData.bairro || "",
+        cidade: initialData.cidade || "",
+        uf: initialData.uf || "",
+        telefone: initialData.telefone || "",
+        nomeProprietario: initialData.nomeProprietario || "",
+        cgcProprietario: initialData.cgcProprietario || "",
+        enderecoProprietario: initialData.enderecoProprietario || "",
+        nomeResponsavel: initialData.nomeResponsavel || "",
+        cgcResponsavel: initialData.cgcResponsavel || "",
+        conselho: initialData.conselho || "",
+        art: initialData.art || "",
+        ambienteSelecionado: ambienteExiste ? String(initialData.ambienteId) : "",
+        tagSelecionada: tagExiste ? String(initialData.tagId) : "",
+        servicoSelecionado: "",
+      });
+    }
+  }, [initialData, tags, ambientes]);
+
+
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -80,7 +129,24 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    onSave({ ...formData, checklist });
+
+    const checklistTransformado = checklist.map((item: ChecklistItem) => {
+      const servico = servicos.find(s => s.nome === item.descricao);
+      return {
+        descricao: item.descricao,
+        periodicidade: item.periodicidade,
+        data: item.data,
+        executadoPor: item.executadoPor,
+        aprovadoPor: item.aprovadoPor,
+        servicoId: servico?.id ?? null,
+        dataExecucao: item.data ? item.data : undefined,
+      };
+    });
+
+    onSave({
+      ...formData,
+      checklist: checklistTransformado,
+    });
   }
 
   function formatarDataBR(data: string): string {
@@ -89,12 +155,22 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
     return `${dia}/${mes}/${ano}`;
   }
 
-
   function handleGeneratePDF() {
     const doc = new jsPDF();
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(12);
+    const hoje = new Date();
+    const dataGeracao = hoje.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Data de Geração: ${dataGeracao}`, 200, 10, { align: "right" });
+
     doc.text("PLANO DE MANUTENÇÃO, OPERAÇÃO E CONTROLE - PMOC", 105, 15, { align: "center" });
 
     doc.setFontSize(10);
@@ -137,7 +213,7 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
 
     autoTable(doc, {
       head: [["Descrição", "Periodicidade", "Data Execução", "Executado por", "Aprovado por"]],
-      body: checklist.map(item => [
+      body: checklist.map((item: ChecklistItem) => [
         item.descricao,
         item.periodicidade,
         formatarDataBR(item.data),
@@ -147,24 +223,20 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
       startY: 160,
       styles: {
         fontSize: 9,
-        cellPadding: { top: 4, bottom: 4 }, // espaçamento seguro
+        cellPadding: { top: 4, bottom: 4 },
       },
       headStyles: { fillColor: [230, 230, 230], textColor: 0 },
     });
 
-
     const finalY = (doc as any).lastAutoTable.finalY + 10;
-
     doc.setFont("helvetica", "normal");
     doc.line(20, finalY, 90, finalY);
     doc.line(120, finalY, 190, finalY);
     doc.text("Técnico Responsável", 30, finalY + 6);
     doc.text("Engenheiro Responsável", 130, finalY + 6);
 
-
     doc.save("PMOC-preenchido.pdf");
   }
-
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -177,6 +249,12 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  console.log("tags:", tags);
+  console.log("ambientes:", ambientes);
+  console.log("formData.tagSelecionada:", formData.tagSelecionada);
+  console.log("formData.ambienteSelecionado:", formData.ambienteSelecionado);
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -206,10 +284,11 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
                 name="ambienteSelecionado"
                 value={formData.ambienteSelecionado}
                 onChange={handleChange}
+                className="border p-2 rounded"
               >
                 <option value="">Selecione um Ambiente</option>
                 {ambientes.map((amb) => (
-                  <option key={amb.id} value={amb.id.toString()}>
+                  <option key={amb.id} value={String(amb.id)}>
                     {amb.nome}
                   </option>
                 ))}
@@ -223,16 +302,14 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
                 name="tagSelecionada"
                 value={formData.tagSelecionada}
                 onChange={handleChange}
-                className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400"
+                className="border p-2 rounded"
               >
                 <option value="">Selecione uma TAG</option>
-                {tags
-                  .filter(tagObj => tagObj && tagObj.id != null)
-                  .map(tagObj => (
-                    <option key={tagObj.id} value={tagObj.id.toString()}>
-                      {tagObj.tag} - {tagObj.unidade} - {tagObj.local}
-                    </option>
-                  ))}
+                {tags.map((tag) => (
+                  <option key={tag.id} value={String(tag.id)}>
+                    {tag.tag} - {tag.unidade} - {tag.local}
+                  </option>
+                ))}
               </select>
 
             </div>
