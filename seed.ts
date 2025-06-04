@@ -3,6 +3,9 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  await prisma.ambiente.deleteMany();
+  await prisma.servico.deleteMany();
+
   await prisma.ambiente.createMany({
     data: [
       { nome: 'SEDE' },

@@ -5,8 +5,8 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   const tags = await prisma.tag.findMany({
-    select: { tag: true },
+    select: { id: true, tag: true, unidade: true, local: true },
   });
+  return NextResponse.json(tags);
 
-  return NextResponse.json(tags.map((t) => t.tag));
 }

@@ -80,6 +80,7 @@ export default function PMOCForm() {
         fetchSelects();
     }, []);
 
+
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
@@ -176,14 +177,15 @@ export default function PMOCForm() {
                             </select>
 
 
-                            <select name="tagSelecionada" value={formData.tagSelecionada} onChange={handleChange} className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400">
+                            <select name="tagSelecionada" value={formData.tagSelecionada} onChange={handleChange}>
                                 <option value="">Selecione uma TAG</option>
                                 {tags.map((tag) => (
                                     <option key={tag.id} value={tag.id}>
-                                        {tag.tag}
+                                        {tag.tag} - {tag.unidade} - {tag.local}
                                     </option>
                                 ))}
                             </select>
+
                         </div>
                     </section>
 
@@ -212,9 +214,10 @@ export default function PMOCForm() {
                                                     <option value="">Selecione um serviço</option>
 
                                                     {servicos.map((srv) => (
-                                                        <option key={srv.id} value={srv.id}>
+                                                        <option key={srv.id} value={srv.nome}>
                                                             {srv.nome}
                                                         </option>
+
                                                     ))}
                                                 </select>
                                             </td>

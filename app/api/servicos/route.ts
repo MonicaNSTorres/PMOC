@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   const servicos = await prisma.servico.findMany({
-    select: { nome: true },
+    select: { id: true, nome: true },
   });
-  return NextResponse.json(servicos.map((s) => s.nome));
+  return NextResponse.json(servicos);
 }

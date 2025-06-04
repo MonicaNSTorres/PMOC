@@ -83,6 +83,13 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
     onSave({ ...formData, checklist });
   }
 
+  function formatarDataBR(data: string): string {
+    if (!data) return "";
+    const [ano, mes, dia] = data.split("T")[0].split("-");
+    return `${dia}/${mes}/${ano}`;
+  }
+
+
   function handleGeneratePDF() {
     const doc = new jsPDF();
 
@@ -133,14 +140,27 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
       body: checklist.map(item => [
         item.descricao,
         item.periodicidade,
-        item.data,
+        formatarDataBR(item.data),
         item.executadoPor,
         item.aprovadoPor,
       ]),
       startY: 160,
-      styles: { fontSize: 9 },
+      styles: {
+        fontSize: 9,
+        cellPadding: { top: 4, bottom: 4 }, // espaçamento seguro
+      },
       headStyles: { fillColor: [230, 230, 230], textColor: 0 },
     });
+
+
+    const finalY = (doc as any).lastAutoTable.finalY + 10;
+
+    doc.setFont("helvetica", "normal");
+    doc.line(20, finalY, 90, finalY);
+    doc.line(120, finalY, 190, finalY);
+    doc.text("Técnico Responsável", 30, finalY + 6);
+    doc.text("Engenheiro Responsável", 130, finalY + 6);
+
 
     doc.save("PMOC-preenchido.pdf");
   }
