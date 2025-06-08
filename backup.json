@@ -1,6 +1,773 @@
 {
-  "ambientes": [],
-  "tags": [],
-  "servicos": [],
+  "ambientes": [
+    {
+      "id": 1,
+      "nome": "SEDE",
+      "local": null
+    },
+    {
+      "id": 2,
+      "nome": "CENTRO DE CONVIVÊNCIA",
+      "local": null
+    },
+    {
+      "id": 3,
+      "nome": "EUGENIO DE MELO",
+      "local": null
+    },
+    {
+      "id": 4,
+      "nome": "SICOOBCRESSEM LESTE",
+      "local": null
+    },
+    {
+      "id": 5,
+      "nome": "SUL",
+      "local": null
+    },
+    {
+      "id": 6,
+      "nome": "SUL AGÊNCIA",
+      "local": null
+    },
+    {
+      "id": 7,
+      "nome": "JARDIM ORIENTE",
+      "local": null
+    },
+    {
+      "id": 8,
+      "nome": "CAÇAPAVA",
+      "local": null
+    },
+    {
+      "id": 9,
+      "nome": "CAMPOS DO JORDÃO",
+      "local": null
+    },
+    {
+      "id": 10,
+      "nome": "CARAGUATATUBA",
+      "local": null
+    },
+    {
+      "id": 11,
+      "nome": "CRUZEIRO",
+      "local": null
+    },
+    {
+      "id": 12,
+      "nome": "ILHABELA",
+      "local": null
+    },
+    {
+      "id": 13,
+      "nome": "JACAREÍ",
+      "local": null
+    },
+    {
+      "id": 14,
+      "nome": "JAMBEIRO AGÊNCIA",
+      "local": null
+    },
+    {
+      "id": 15,
+      "nome": "PARAIBUNA",
+      "local": null
+    },
+    {
+      "id": 16,
+      "nome": "PARAIBUNA AGÊNCIA",
+      "local": null
+    },
+    {
+      "id": 17,
+      "nome": "SÃO FRANCISCO XAVIER",
+      "local": null
+    },
+    {
+      "id": 18,
+      "nome": "SÃO SEBASTIÃO",
+      "local": null
+    },
+    {
+      "id": 19,
+      "nome": "TAUBATÉ",
+      "local": null
+    },
+    {
+      "id": 20,
+      "nome": "UBATUBA",
+      "local": null
+    }
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "tag": "SSS-ST-001",
+      "unidade": "GARAGEM",
+      "local": "SALA TI/CPD/CFTV"
+    },
+    {
+      "id": 2,
+      "tag": "SSS-ST-002",
+      "unidade": "GARAGEM",
+      "local": "SALA TI/CPD/CFTV"
+    },
+    {
+      "id": 3,
+      "tag": "SPT-HE-001",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "HALL ELEVADOR"
+    },
+    {
+      "id": 4,
+      "tag": "SPT-CX-002",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "CX ELETRÔNICO"
+    },
+    {
+      "id": 5,
+      "tag": "SPT-RE-003",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "RECEPÇÃO"
+    },
+    {
+      "id": 6,
+      "tag": "SPT-ES-004",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "ESPERA"
+    },
+    {
+      "id": 7,
+      "tag": "SPT-AT-005",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 8,
+      "tag": "SPT-AT-006",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 9,
+      "tag": "SPT-GA-007",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "GERENCIA ATENDIMENTO"
+    },
+    {
+      "id": 10,
+      "tag": "SPT-GA-008",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "GERENCIA ATENDIMENTO"
+    },
+    {
+      "id": 11,
+      "tag": "SPT-AG-009",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "AGÊNCIA"
+    },
+    {
+      "id": 12,
+      "tag": "SPT-AG-010",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "AGÊNCIA"
+    },
+    {
+      "id": 13,
+      "tag": "SPT-TE-011",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "TESOURARIA"
+    },
+    {
+      "id": 14,
+      "tag": "SPT-LC-012",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "LOUNGE CAFE"
+    },
+    {
+      "id": 15,
+      "tag": "SPT-AS-013",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "ATENDIMENTO SEGURO"
+    },
+    {
+      "id": 16,
+      "tag": "SPT-AS-014",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "ATENDIMENTO SEGURO"
+    },
+    {
+      "id": 17,
+      "tag": "SPT-CE-015",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "CORREDOR E ENTRADA"
+    },
+    {
+      "id": 18,
+      "tag": "SPT-CE-016",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "CORREDOR E ENTRADA"
+    },
+    {
+      "id": 19,
+      "tag": "SPT-AL-017",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "ANÁLISE TECNICA"
+    },
+    {
+      "id": 20,
+      "tag": "SPT-CO-018",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "COPA"
+    },
+    {
+      "id": 21,
+      "tag": "SPT-GU-019",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "GUARITA"
+    },
+    {
+      "id": 22,
+      "tag": "SPT-NB-020",
+      "unidade": "SEDE PISO TÉRREO",
+      "local": "SALA DO NOBREAK"
+    },
+    {
+      "id": 23,
+      "tag": "SPS-HE-001 ",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "HALL ELEVADOR"
+    },
+    {
+      "id": 24,
+      "tag": "SPS-HE-002",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "HALL ELEVADOR"
+    },
+    {
+      "id": 25,
+      "tag": "SPS-CE-003",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "CORREDOR E ENTRADA"
+    },
+    {
+      "id": 26,
+      "tag": "SPS-CE-004",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "CORREDOR E ENTRADA"
+    },
+    {
+      "id": 27,
+      "tag": "SPS-SR-005",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "REUNIÃO"
+    },
+    {
+      "id": 28,
+      "tag": "SPS-SR-006",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "REUNIÃO"
+    },
+    {
+      "id": 29,
+      "tag": "SPS-SC-007",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "CONSELHO"
+    },
+    {
+      "id": 30,
+      "tag": "SPS-SP-008",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "PRESIDÊNCIA CONSELHO"
+    },
+    {
+      "id": 31,
+      "tag": "SPS-RE-009",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "RECEPÇÃO"
+    },
+    {
+      "id": 32,
+      "tag": "SPS-LE-010",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "LOUNGE ESPERA"
+    },
+    {
+      "id": 33,
+      "tag": "SPS-SD-011",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "DIRETORIA OPERACIONAL"
+    },
+    {
+      "id": 34,
+      "tag": "SPS-SD-012",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "ASSESSORIA PRESIDÊNCIA"
+    },
+    {
+      "id": 35,
+      "tag": "SPS-SD-013",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "DIRETOR PRESIDENTE"
+    },
+    {
+      "id": 36,
+      "tag": "SPS-AU-014",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "AUDITÓRIO"
+    },
+    {
+      "id": 37,
+      "tag": "SPS-AU-015",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "AUDITÓRIO"
+    },
+    {
+      "id": 38,
+      "tag": "SPS-AU-016",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "AUDITÓRIO"
+    },
+    {
+      "id": 39,
+      "tag": "SPS-AU-017",
+      "unidade": "SEDE PISO SUPERIOR",
+      "local": "AUDITÓRIO"
+    },
+    {
+      "id": 40,
+      "tag": "APT-SA-001",
+      "unidade": "ANEXO PISO TÉRREO",
+      "local": "SALA ADMINISTRAÇÃO"
+    },
+    {
+      "id": 41,
+      "tag": "APT-SA-002",
+      "unidade": "ANEXO PISO TÉRREO",
+      "local": "SALA ADMINISTRAÇÃO"
+    },
+    {
+      "id": 42,
+      "tag": "APT-SA-003",
+      "unidade": "ANEXO PISO TÉRREO",
+      "local": "SALA ADMINISTRAÇÃO"
+    },
+    {
+      "id": 43,
+      "tag": "APT-SA-004",
+      "unidade": "ANEXO PISO TÉRREO",
+      "local": "SALA ADMINISTRAÇÃO"
+    },
+    {
+      "id": 44,
+      "tag": "APT-SA-005",
+      "unidade": "ANEXO PISO TÉRREO",
+      "local": "SALA ADMINISTRAÇÃO"
+    },
+    {
+      "id": 45,
+      "tag": "APT-SA-006",
+      "unidade": "ANEXO PISO TÉRREO",
+      "local": "SALA ADMINISTRAÇÃO"
+    },
+    {
+      "id": 46,
+      "tag": "APT-AL-007",
+      "unidade": "ANEXO PISO TÉRREO",
+      "local": "SALA ALMOXARIFADO"
+    },
+    {
+      "id": 47,
+      "tag": "APT-SI-008",
+      "unidade": "ANEXO PISO TÉRREO",
+      "local": "SALA TECNO INFO"
+    },
+    {
+      "id": 48,
+      "tag": "APT-SI-009",
+      "unidade": "ANEXO PISO TÉRREO",
+      "local": "SALA TECNO INFO"
+    },
+    {
+      "id": 49,
+      "tag": "APT-SI-010",
+      "unidade": "ANEXO PISO TÉRREO",
+      "local": "SALA TECNO INFO"
+    },
+    {
+      "id": 50,
+      "tag": "APS-RF-001",
+      "unidade": "ANEXO PISO SUPERIOR",
+      "local": "REFEITÓRIO"
+    },
+    {
+      "id": 51,
+      "tag": "APS-RF-002",
+      "unidade": "ANEXO PISO SUPERIOR",
+      "local": "REFEITÓRIO"
+    },
+    {
+      "id": 52,
+      "tag": "APS-RF-003",
+      "unidade": "ANEXO PISO SUPERIOR",
+      "local": "REFEITÓRIO"
+    },
+    {
+      "id": 53,
+      "tag": "APS-RF-004",
+      "unidade": "ANEXO PISO SUPERIOR",
+      "local": "REFEITÓRIO"
+    },
+    {
+      "id": 54,
+      "tag": "APS-RF-005",
+      "unidade": "ANEXO PISO SUPERIOR",
+      "local": "REFEITÓRIO / DESCOMPRESSÃO"
+    },
+    {
+      "id": 55,
+      "tag": "CPT-GU-001",
+      "unidade": "CENTRO DE CONVIVENCIA PISO TÉRREO",
+      "local": "GUARITA"
+    },
+    {
+      "id": 56,
+      "tag": "CPT-RE-002",
+      "unidade": "CENTRO DE CONVIVENCIA PISO TÉRREO",
+      "local": "RECEPÇÃO"
+    },
+    {
+      "id": 57,
+      "tag": "CPT-RE-003",
+      "unidade": "CENTRO DE CONVIVENCIA PISO TÉRREO",
+      "local": "RECEPÇÃO"
+    },
+    {
+      "id": 58,
+      "tag": "CPT-RE-004",
+      "unidade": "CENTRO DE CONVIVENCIA PISO TÉRREO",
+      "local": "RECEPÇÃO"
+    },
+    {
+      "id": 59,
+      "tag": "CPT-AU-005",
+      "unidade": "CENTRO DE CONVIVENCIA PISO TÉRREO",
+      "local": "AUDITÓRIO"
+    },
+    {
+      "id": 60,
+      "tag": "CPT-AU-006",
+      "unidade": "CENTRO DE CONVIVENCIA PISO TÉRREO",
+      "local": "AUDITÓRIO"
+    },
+    {
+      "id": 61,
+      "tag": "CPT-ST-007",
+      "unidade": "CENTRO DE CONVIVENCIA PISO TÉRREO",
+      "local": "GERENCIA ATENDIMENTO PJ"
+    },
+    {
+      "id": 62,
+      "tag": "CPT-SC-008",
+      "unidade": "CENTRO DE CONVIVENCIA PISO TÉRREO",
+      "local": "SALA DE COSTURA"
+    },
+    {
+      "id": 63,
+      "tag": "CPT-CO-009",
+      "unidade": "CENTRO DE CONVIVENCIA PISO TÉRREO",
+      "local": "COPA/COZINHA"
+    },
+    {
+      "id": 64,
+      "tag": "CPS-RE-001",
+      "unidade": "CENTRO DE CONVIVENCIA PISO SUPERIOR",
+      "local": "RECEPÇÃO/SALA CONSELHO"
+    },
+    {
+      "id": 65,
+      "tag": "CPS-SA-002",
+      "unidade": "CENTRO DE CONVIVENCIA PISO SUPERIOR",
+      "local": "SALA ADMINISTRAÇÃO"
+    },
+    {
+      "id": 66,
+      "tag": "CPS-SP-003",
+      "unidade": "CENTRO DE CONVIVENCIA PISO SUPERIOR",
+      "local": "SALA PODCAST"
+    },
+    {
+      "id": 67,
+      "tag": "CPS-ST-004",
+      "unidade": "CENTRO DE CONVIVENCIA PISO SUPERIOR",
+      "local": "SALA TREINAMENTO"
+    },
+    {
+      "id": 69,
+      "tag": "CPS-ST-006",
+      "unidade": "CENTRO DE CONVIVENCIA PISO SUPERIOR",
+      "local": "SALA TREINAMENTO"
+    },
+    {
+      "id": 70,
+      "tag": "CPS-ST-007",
+      "unidade": "CENTRO DE CONVIVENCIA PISO SUPERIOR",
+      "local": "SALA TREINAMENTO"
+    },
+    {
+      "id": 71,
+      "tag": "CPS-SP-004",
+      "unidade": "CENTRO DE CONVIVENCIA PISO SUPERIOR",
+      "local": "SALA PESSOAL CALLCENTER"
+    },
+    {
+      "id": 68,
+      "tag": "CPS-ST-005",
+      "unidade": "CENTRO DE CONVIVENCIA PISO SUPERIOR",
+      "local": "SALA TI/CPD/CFTV"
+    },
+    {
+      "id": 73,
+      "tag": "CPS-AD-006",
+      "unidade": "CENTRO DE CONVIVENCIA PISO SUPERIOR",
+      "local": "ANFITEATRO E DANÇA"
+    },
+    {
+      "id": 74,
+      "tag": "CPS-AD-007",
+      "unidade": "CENTRO DE CONVIVENCIA PISO SUPERIOR",
+      "local": "ANFITEATRO E DANÇA"
+    },
+    {
+      "id": 75,
+      "tag": "AST-TI-001",
+      "unidade": "AG SATÉLITE ",
+      "local": "SALA TI/CPD/CFTV"
+    },
+    {
+      "id": 76,
+      "tag": "AST-AT-002",
+      "unidade": "AG SATÉLITE",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 77,
+      "tag": "AJA-AT-001",
+      "unidade": "AG JAMBEIRO",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 78,
+      "tag": "AJA-AT-002",
+      "unidade": "AG JAMBEIRO",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 79,
+      "tag": "AJA-AT-003",
+      "unidade": "AG JAMBEIRO",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 80,
+      "tag": "AJA-CO-004",
+      "unidade": "AG JAMBEIRO",
+      "local": "COPA"
+    },
+    {
+      "id": 81,
+      "tag": "AJA-TI-005",
+      "unidade": "AG JAMBEIRO",
+      "local": "SALA TI/CFTV/NOBREAK"
+    },
+    {
+      "id": 82,
+      "tag": "APA-AT-001",
+      "unidade": "AG PARAIBUNA CEDRAP",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 83,
+      "tag": "APA-AT-002",
+      "unidade": "AG PARAIBUNA CEDRAP",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 84,
+      "tag": "APA-AT-003",
+      "unidade": "AG PARAIBUNA CEDRAP",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 85,
+      "tag": "APA-AT-004",
+      "unidade": "AG PARAIBUNA CEDRAP",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 86,
+      "tag": "APA-CX-005",
+      "unidade": "AG PARAIBUNA CEDRAP",
+      "local": "ATM"
+    },
+    {
+      "id": 87,
+      "tag": "APA-TI-006",
+      "unidade": "AG PARAIBUNA CEDRAP",
+      "local": "SALA TI/CFTV/NOBREAK"
+    },
+    {
+      "id": 88,
+      "tag": "ACP-AT-001",
+      "unidade": "PA CAÇAPAVA",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 89,
+      "tag": "ACJ-AT-001",
+      "unidade": "PA CAMPOS DE JORDÃO",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 90,
+      "tag": "ACG-AT-001",
+      "unidade": "PA CARAGUÁ",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 91,
+      "tag": "ACR-AT-001",
+      "unidade": "PA CRUZEIRO ",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 92,
+      "tag": "AEM-AT-001",
+      "unidade": "PA EUGENIO DE MELO",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 93,
+      "tag": "AIB-AT-001",
+      "unidade": "PA ILHA BELA",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 94,
+      "tag": "AJC-AT-001",
+      "unidade": "PA JACAREÍ",
+      "local": "ATENDIMENTO ESPERA"
+    },
+    {
+      "id": 95,
+      "tag": "AJC-AT-002",
+      "unidade": "PA JACAREÍ",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 96,
+      "tag": "AJM-AT-001",
+      "unidade": "PA ORIENTE",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 97,
+      "tag": "APA-AT-007",
+      "unidade": "PA PARAIBUNA CENTRO",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 98,
+      "tag": "ASB-AT-001",
+      "unidade": "PA SÃO SEBASTIÃO",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 99,
+      "tag": "ASB-AT-002",
+      "unidade": "PA SÃO SEBASTIÃO",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 100,
+      "tag": "AST-AT-003",
+      "unidade": "PA SATÉLITE",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 101,
+      "tag": "AST-AT-004",
+      "unidade": "PA SATÉLITE",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 102,
+      "tag": "ASF-AT-001",
+      "unidade": "PA SFX",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 103,
+      "tag": "ASF-AT-002",
+      "unidade": "PA SFX",
+      "local": "ATENDIMENTO SEBRAE"
+    },
+    {
+      "id": 104,
+      "tag": "ATB-AT-001",
+      "unidade": "PA TAUBATÉ",
+      "local": "ATENDIMENTO"
+    },
+    {
+      "id": 105,
+      "tag": "AUB-AT-001",
+      "unidade": "PA UBATUBA",
+      "local": "ATENDIMENTO"
+    }
+  ],
+  "servicos": [
+    {
+      "id": 1,
+      "nome": "Verificar e corrigir o ajuste da moldura na estrutura"
+    },
+    {
+      "id": 2,
+      "nome": "Verificar obstrução/inclinação para drenagem do condensado na bandeja"
+    },
+    {
+      "id": 3,
+      "nome": "Verificar a existência de danos e corrosão no aletado e moldura"
+    },
+    {
+      "id": 4,
+      "nome": "Verificar a operação de drenagem de água da bandeja"
+    },
+    {
+      "id": 5,
+      "nome": "Limpeza externa"
+    },
+    {
+      "id": 6,
+      "nome": "Aplicação de produtos antibactericida na serpentina"
+    },
+    {
+      "id": 7,
+      "nome": "Desincrustar serpentinas, se necessário"
+    },
+    {
+      "id": 8,
+      "nome": "Verificar e limpar turbina do ventilador"
+    },
+    {
+      "id": 9,
+      "nome": "Verificar danos e corrosão do suporte e existência de frestas"
+    },
+    {
+      "id": 10,
+      "nome": "Lavar e remover biofilme da serpentina com produto químico biodegradável"
+    }
+  ],
   "pmocs": []
 }
