@@ -115,8 +115,6 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
     }
   }, [initialData, tags, ambientes]);
 
-
-
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -255,12 +253,15 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
   console.log("formData.tagSelecionada:", formData.tagSelecionada);
   console.log("formData.ambienteSelecionado:", formData.ambienteSelecionado);
 
+  console.log("TAG selecionada:", formData.tagSelecionada);
+  console.log("Tags disponíveis:", tags.map(t => t.id));
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div ref={modalRef} className="relative bg-white p-6 rounded shadow-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <button onClick={onCancel} className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-lg font-bold">
-          <X size={20} />
+          <X size={30} className="cursor-pointer font-semibold"/>
         </button>
         <h1 className="text-2xl font-bold mb-6">Editar PMOCs</h1>
         <div id="pmoc-pdf" className="bg-white p-4">

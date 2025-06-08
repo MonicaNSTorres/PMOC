@@ -194,7 +194,7 @@ export default function PMOCForm() {
                             </select>
 
 
-                            <select name="tagSelecionada" value={formData.tagSelecionada} onChange={handleChange}>
+                            <select name="tagSelecionada" value={formData.tagSelecionada} onChange={handleChange}  className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400">
                                 <option value="">Selecione uma TAG</option>
                                 {tags.map((tag) => (
                                     <option key={tag.id} value={tag.id}>

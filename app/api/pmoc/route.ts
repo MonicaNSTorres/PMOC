@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
@@ -16,6 +15,7 @@ export async function GET(req: NextRequest) {
       where: { id },
       include: {
         tag: true,
+        ambiente: true, // <-- necessário
         checklist: {
           orderBy: { id: "asc" },
         },
@@ -29,6 +29,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({
       ...pmoc,
       tagSelecionada: pmoc.tag?.id?.toString() || "",
+      ambienteSelecionado: pmoc.ambiente?.id?.toString() || "", // <-- adicionado
     });
   } catch (error) {
     console.error("Erro ao buscar PMOC:", error);

@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
@@ -11,39 +10,40 @@ export async function POST(req: NextRequest) {
       nomeAmbiente, endereco, numero, bairro, cidade, uf, telefone,
       nomeProprietario, cgcProprietario, enderecoProprietario,
       nomeResponsavel, cgcResponsavel, conselho, art,
-      ambienteSelecionado, servicoSelecionado,
-      checklist = []
+      ambienteSelecionado, servicoSelecionado, tagSelecionada,
+      checklist = [],
     } = body;
 
     console.log("body recebido:", body);
 
-    let ambiente = await prisma.ambiente.findFirst({
-      where: { nome: ambienteSelecionado },
-    });
-
-    if (!ambiente) {
-      ambiente = await prisma.ambiente.create({
-        data: { nome: ambienteSelecionado },
+    // ✅ Correção aqui: trata ambienteSelecionado como ID
+    let ambiente = null;
+    if (ambienteSelecionado && !isNaN(Number(ambienteSelecionado))) {
+      ambiente = await prisma.ambiente.findUnique({
+        where: { id: Number(ambienteSelecionado) },
       });
     }
 
-
+    // Serviço continua sendo criado automaticamente
     const servico = servicoSelecionado
       ? await prisma.servico.upsert({
-        where: { nome: servicoSelecionado },
-        update: {},
-        create: { nome: servicoSelecionado }
-      })
+          where: { nome: servicoSelecionado },
+          update: {},
+          create: { nome: servicoSelecionado },
+        })
       : null;
 
-    console.log("checklist formatado:", checklist.map((item: any) => ({
-      descricao: item.descricao,
-      periodicidade: item.periodicidade,
-      dataExecucao: item.data ? new Date(`${item.data}T00:00:00`) : undefined,
-      executadoPor: item.executadoPor,
-      aprovadoPor: item.aprovadoPor,
-      servicoId: servico?.id || undefined,
-    })));
+    console.log(
+      "checklist formatado:",
+      checklist.map((item: any) => ({
+        descricao: item.descricao,
+        periodicidade: item.periodicidade,
+        dataExecucao: item.data ? new Date(`${item.data}T00:00:00`) : undefined,
+        executadoPor: item.executadoPor,
+        aprovadoPor: item.aprovadoPor,
+        servicoId: servico?.id || undefined,
+      }))
+    );
 
     const novoPmoc = await prisma.pMOC.create({
       data: {
@@ -61,8 +61,9 @@ export async function POST(req: NextRequest) {
         cgcResponsavel,
         conselho,
         art,
-        ambienteId: ambiente?.id,
+        ambienteId: ambiente?.id || null, // <- usa o ID existente
         servicoId: servico?.id,
+        tagId: tagSelecionada ? Number(tagSelecionada) : null,
         checklist: {
           create: checklist.map((item: any) => ({
             descricao: item.descricao,

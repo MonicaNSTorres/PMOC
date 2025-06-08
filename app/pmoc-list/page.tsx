@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -6,7 +5,6 @@ import axios from "axios";
 import { Pencil, Trash2 } from "lucide-react";
 import PMOCFormEditable from "../components/pmoc-modal-edit/pmoc-modal-edit";
 import BackButton from "../components/back-button/back-button";
-
 
 interface PMOC {
   id: number;
@@ -31,13 +29,19 @@ export default function ListaPMOC() {
   const [pmocs, setPmocs] = useState<PMOC[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [formEdit, setFormEdit] = useState<Partial<PMOC>>({});
+  const [dataInicio, setDataInicio] = useState("");
+  const [dataFim, setDataFim] = useState("");
 
   useEffect(() => {
     fetchPmocs();
   }, []);
 
   async function fetchPmocs() {
-    const response = await axios.get("/api/listar-pmocs");
+    const params: any = {};
+    if (dataInicio) params.inicio = dataInicio;
+    if (dataFim) params.fim = dataFim;
+
+    const response = await axios.get("/api/listar-pmocs", { params });
     setPmocs(response.data);
   }
 
@@ -53,7 +57,6 @@ export default function ListaPMOC() {
     setFormEdit(response.data);
     setEditingId(pmoc.id);
   }
-
 
   async function salvarEdicao() {
     if (!editingId) return;
@@ -71,6 +74,33 @@ export default function ListaPMOC() {
       <div className="max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
         <BackButton />
         <h1 className="text-2xl font-bold mb-6">PMOCs Cadastrados</h1>
+
+        <div className="flex flex-wrap items-end gap-4 mb-6">
+          <div>
+            <label className="block text-sm text-gray-700 mb-1 font-semibold">Data Início</label>
+            <input
+              type="date"
+              value={dataInicio}
+              onChange={(e) => setDataInicio(e.target.value)}
+              className="border rounded px-3 py-2 text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-gray-700 mb-1 font-semibold">Data Fim</label>
+            <input
+              type="date"
+              value={dataFim}
+              onChange={(e) => setDataFim(e.target.value)}
+              className="border rounded px-3 py-2 text-sm"
+            />
+          </div>
+          <button
+            onClick={fetchPmocs}
+            className="bg-blue-800 hover:bg-blue-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center">
+            Filtrar
+          </button>
+        </div>
+
         <div className="overflow-auto">
           <table className="w-full text-md border bg-white shadow-md">
             <thead className="text-gray-700 bg-blue-100">
@@ -87,13 +117,23 @@ export default function ListaPMOC() {
                 <tr key={pmoc.id} className="border-t">
                   <td className="border p-2">{pmoc.id}</td>
                   <td className="border p-2">{pmoc.nomeAmbiente}</td>
-                  <td className="border p-2">{pmoc.cidade} / {pmoc.uf}</td>
-                  <td className="border p-2">{new Date(pmoc.criadoEm).toLocaleDateString()}</td>
+                  <td className="border p-2">
+                    {pmoc.cidade} / {pmoc.uf}
+                  </td>
+                  <td className="border p-2">
+                    {new Date(pmoc.criadoEm).toLocaleDateString()}
+                  </td>
                   <td className="p-2 flex gap-2">
-                    <button onClick={() => abrirEdicao(pmoc)} className="text-blue-800 hover:text-blue-600 cursor-pointer">
+                    <button
+                      onClick={() => abrirEdicao(pmoc)}
+                      className="text-blue-800 hover:text-blue-600 cursor-pointer"
+                    >
                       <Pencil size={22} />
                     </button>
-                    <button onClick={() => handleDelete(pmoc.id)} className="text-red-800 hover:text-red-600 cursor-pointer">
+                    <button
+                      onClick={() => handleDelete(pmoc.id)}
+                      className="text-red-800 hover:text-red-600 cursor-pointer"
+                    >
                       <Trash2 size={22} />
                     </button>
                   </td>
