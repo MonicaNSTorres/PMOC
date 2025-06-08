@@ -1,39 +1,28 @@
-import { PrismaClient } from '@prisma/client';
-import data from './backup.json';
+import { PrismaClient } from "@prisma/client";
+import data from "./backup.json";
 
 const prisma = new PrismaClient();
 
+type Ambiente = { nome: string };
+type Tag = { tag: string; unidade: string; local: string };
+
 async function main() {
-  for (const ambiente of data.ambientes) {
+  for (const ambiente of data.ambientes as Ambiente[]) {
     await prisma.ambiente.create({ data: { nome: ambiente.nome } });
   }
 
-  for (const tag of data.tags) {
-    await prisma.tag.create({ data: tag });
-  }
-
-  for (const servico of data.servicos) {
-    await prisma.servico.create({ data: servico });
-  }
-
-  for (const pmoc of data.pmocs) {
-    await prisma.pMOC.create({
-      data: {
-        ...pmoc,
-        checklist: {
-          create: pmoc.checklist.map((item: any) => ({
-            descricao: item.descricao,
-            periodicidade: item.periodicidade,
-            dataExecucao: item.dataExecucao ? new Date(item.dataExecucao) : undefined,
-            executadoPor: item.executadoPor,
-            aprovadoPor: item.aprovadoPor,
-          })),
-        },
-      },
-    });
+  for (const tag of data.tags as Tag[]) {
+    await prisma.tag.create({ data: { tag: tag.tag, unidade: tag.unidade, local: tag.local } });
   }
 
   console.log("✅ Dados importados com sucesso para o Railway");
 }
 
-main().finally(() => prisma.$disconnect());
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
