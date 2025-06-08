@@ -15,7 +15,7 @@ type ChecklistItem = {
 
 
 export default function PMOCForm() {
-    const [ambientes, setAmbientes] = useState<string[]>([]);
+    const [ambientes, setAmbientes] = useState<{ id: number; nome: string }[]>([]);
     const [servicos, setServicos] = useState<{ id: number; nome: string }[]>([]);
     const [tags, setTags] = useState<{ id: number; tag: string; unidade: string; local: string }[]>([]);
     const router = useRouter();
@@ -189,7 +189,6 @@ export default function PMOCForm() {
                                         {amb.nome}
                                     </option>
                                 ))}
-
 
                             </select>
 
