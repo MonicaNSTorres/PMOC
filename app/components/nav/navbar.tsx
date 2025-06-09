@@ -23,8 +23,7 @@ const SidebarPMOC = () => {
   if (!isClient) return null;
 
   return (
-    //<div className={`${isOpen ? "w-64" : "w-20"} bg-gray-900 text-gray-400 flex flex-col transition-all duration-300 h-screen fixed`}>
-    <div className={`bg-gray-900 text-gray-400 flex flex-col transition-all duration-300 fixed md:relative z-50 h-full ${isOpen ? "w-64" : "w-16"} md:w-64`}>
+    <div className={`${isOpen ? "w-64" : "w-20"} bg-gray-900 text-gray-400 flex flex-col transition-all duration-300 h-screen fixed`}>
       <div className="flex justify-center items-center p-4">
         {/*{isOpen ? (
           <div className={`${styles.logo} flex justify-center`} />
@@ -32,10 +31,9 @@ const SidebarPMOC = () => {
           <div className={`${styles.logoIcon} flex justify-center`} />
         )}*/}
       </div>
-      <button onClick={toggleSidebar} className="flex items-center justify-center h-14 md:hidden">
+      <button onClick={toggleSidebar} className="flex items-center justify-center h-14">
         {isOpen ? "Menu" : <FaBars size={20} color="#9B9B9B" />}
       </button>
-
       <ul className="flex-1 space-y-4 p-4">
         <li>
           <Link
