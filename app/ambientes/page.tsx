@@ -1,0 +1,150 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Pencil, Trash2, Plus } from "lucide-react";
+import BackButton from "../components/back-button/back-button";
+
+interface Ambiente {
+  id?: number;
+  nome: string;
+  local: string;
+}
+
+export default function ListaAmbientes() {
+  const [ambientes, setAmbientes] = useState<Ambiente[]>([]);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [formEdit, setFormEdit] = useState<Partial<Ambiente>>({});
+  const [showCreateModal, setShowCreateModal] = useState(false);
+
+  useEffect(() => {
+    fetchAmbientes();
+  }, []);
+
+  async function fetchAmbientes() {
+    const response = await axios.get("/api/listar-ambientes");
+    setAmbientes(response.data);
+  }
+
+  async function handleDelete(id: number) {
+    if (!confirm("Deseja realmente excluir este Ambiente?")) return;
+    await axios.delete(`/api/excluir-ambiente?id=${id}`);
+    fetchAmbientes();
+  }
+
+  async function salvarEdicao() {
+    if (!editingId) return;
+    await axios.put(`/api/editar-ambiente?id=${editingId}`, formEdit);
+    setEditingId(null);
+    fetchAmbientes();
+  }
+
+  async function salvarNovoAmbiente() {
+    await axios.post("/api/criar-ambiente", formEdit);
+    setShowCreateModal(false);
+    setFormEdit({});
+    fetchAmbientes();
+  }
+
+  function abrirEdicao(ambiente: Ambiente) {
+    setFormEdit(ambiente);
+    setEditingId(ambiente.id!);
+  }
+
+  function handleInputChange(field: keyof Ambiente, value: string) {
+    setFormEdit((prev) => ({ ...prev, [field]: value }));
+  }
+
+  return (
+    <div className="flex flex-col pl-[9%] pr-[10%] min-h-screen bg-gray-200 p-4">
+      <div className="max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
+        <BackButton />
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold mb-6">Ambientes Cadastrados</h1>
+          <button
+            onClick={() => {
+              setFormEdit({ nome: "", local: "" });
+              setShowCreateModal(true);
+            }}
+            className="bg-green-800 hover:bg-green-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center gap-2"
+          >
+            <Plus size={18} /> Cadastrar Ambiente
+          </button>
+        </div>
+
+        <table className="w-full text-sm border shadow-sm">
+          <thead className="bg-blue-100 text-left">
+            <tr>
+              <th className="border p-2">Nome</th>
+              <th className="border p-2">Local</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ambientes.map((ambiente) => (
+              <tr key={ambiente.id} className="border-t">
+                <td className="border p-2">{ambiente.nome}</td>
+                <td className="border p-2">{ambiente.local}</td>
+                <td className="border p-2 flex gap-2">
+                  <button onClick={() => abrirEdicao(ambiente)} className="text-blue-800 hover:text-blue-600 cursor-pointer">
+                    <Pencil size={22} />
+                  </button>
+                  <button onClick={() => handleDelete(ambiente.id!)} className="text-red-800 hover:text-red-600 cursor-pointer">
+                    <Trash2 size={22} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {(editingId || showCreateModal) && (
+          <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
+              <h2 className="text-xl font-semibold mb-4">
+                {editingId ? `Editar Ambiente` : "Nova Ambiente"}
+              </h2>
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  editingId ? await salvarEdicao() : await salvarNovoAmbiente();
+                }}
+                className="space-y-3"
+              >
+                <input
+                  className="border p-2 rounded w-full"
+                  value={formEdit.nome || ""}
+                  onChange={(e) => handleInputChange("nome", e.target.value)}
+                  placeholder="Nome do ambiente"
+                />
+                <input
+                  className="border p-2 rounded w-full"
+                  value={formEdit.local || ""}
+                  onChange={(e) => handleInputChange("local", e.target.value)}
+                  placeholder="Local do ambiente"
+                />
+                <div className="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingId(null);
+                      setShowCreateModal(false);
+                    }}
+                    className="border px-4 py-2 rounded"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-blue-600 text-white px-4 py-2 rounded"
+                  >
+                    Salvar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
