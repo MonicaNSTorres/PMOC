@@ -13,7 +13,8 @@ export default function Home() {
 
     if (email === "admin@email.com" && senha === "123456") {
       localStorage.setItem("pmoc_auth", "true");
-      router.push("/pmoc-form");
+      location.href = "/pmoc-form";
+      //router.push("/pmoc-form");
     } else {
       alert("Credenciais inválidas.");
     }
