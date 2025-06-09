@@ -4,9 +4,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function GET() {
-  const tags = await prisma.tag.findMany({
-    select: { id: true, tag: true, unidade: true, local: true },
-  });
-  return NextResponse.json(tags);
+  try {
+    const tags = await prisma.tag.findMany({
+      orderBy: { tag: "asc" },
+    });
 
+    return NextResponse.json(tags);
+  } catch (error) {
+    console.error("Erro ao listar tags:", error);
+    return NextResponse.json({ erro: "Erro ao buscar tags." }, { status: 500 });
+  }
 }
