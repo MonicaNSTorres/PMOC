@@ -13,12 +13,12 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     setLoading(false); //renderiza apos verificar
   }, []);
 
-  if (loading) return null; 
+  if (loading) return null;
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen w-full overflow-hidden">
       {isAuthenticated && <SidebarPMOC />}
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 overflow-auto">{children}</main>
     </div>
   );
 }
