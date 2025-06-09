@@ -76,8 +76,6 @@ export default function ListarServicos() {
             <tr>
               <th className="border p-2">Código</th>
               <th className="border p-2">Unidade</th>
-              <th className="border p-2">Local</th>
-              <th className="border p-2">Ações</th>
             </tr>
           </thead>
           <tbody>
