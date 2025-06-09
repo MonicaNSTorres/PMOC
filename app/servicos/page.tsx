@@ -74,8 +74,8 @@ export default function ListarServicos() {
         <table className="w-full text-sm border shadow-sm">
           <thead className="bg-blue-100 text-left">
             <tr>
-              <th className="border p-2">Código</th>
-              <th className="border p-2">Unidade</th>
+              <th className="border p-2">Nome</th>
+              <th className="border p-2"></th>
             </tr>
           </thead>
           <tbody>
