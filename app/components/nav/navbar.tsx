@@ -31,7 +31,7 @@ const SidebarPMOC = () => {
           <div className={`${styles.logoIcon} flex justify-center`} />
         )}*/}
       </div>
-      <button onClick={toggleSidebar} className="flex items-center justify-center h-14">
+      <button onClick={toggleSidebar} className="flex items-center justify-center h-14 hover:cursor-pointer">
         {isOpen ? "Menu" : <FaBars size={20} color="#9B9B9B" />}
       </button>
       <ul className="flex-1 space-y-4 p-4">

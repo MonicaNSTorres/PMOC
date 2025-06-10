@@ -26,6 +26,8 @@ export async function GET(req: NextRequest) {
     where,
     include: {
       checklist: true,
+      tag: true,
+      ambiente: true,
     },
     orderBy: { criadoEm: "desc" },
   });

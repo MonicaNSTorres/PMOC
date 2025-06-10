@@ -23,7 +23,17 @@ interface PMOC {
   conselho: string;
   art: string;
   criadoEm: string;
+
+  tag?: {
+    tag: string;
+    unidade: string;
+  };
+
+  ambiente?: {
+    nome: string;
+  };
 }
+
 
 export default function ListaPMOC() {
   const [pmocs, setPmocs] = useState<PMOC[]>([]);
@@ -105,24 +115,23 @@ export default function ListaPMOC() {
           <table className="w-full text-md border bg-white shadow-md">
             <thead className="text-gray-700 bg-blue-100">
               <tr>
-                <th className="border p-2 text-left">Código</th>
-                <th className="border p-2 text-left">Nome do Ambiente</th>
-                <th className="border p-2 text-left">Cidade/UF</th>
+                <th className="border p-2 text-left">TAG</th>
+                <th className="border p-2 text-left">Unidade</th>
+                <th className="border p-2 text-left">Ambiente</th>
+                <th className="border p-2 text-left">Cidade</th>
                 <th className="border p-2 text-left">Data Cadastro</th>
                 <th className="border p-2 text-left">Ações</th>
               </tr>
             </thead>
+
             <tbody>
               {pmocs.map((pmoc) => (
                 <tr key={pmoc.id} className="border-t">
-                  <td className="border p-2">{pmoc.id}</td>
-                  <td className="border p-2">{pmoc.nomeAmbiente}</td>
-                  <td className="border p-2">
-                    {pmoc.cidade} / {pmoc.uf}
-                  </td>
-                  <td className="border p-2">
-                    {new Date(pmoc.criadoEm).toLocaleDateString()}
-                  </td>
+                  <td className="border p-2">{pmoc.tag?.tag || "-"}</td>
+                  <td className="border p-2">{pmoc.tag?.unidade || "-"}</td>
+                  <td className="border p-2">{pmoc.ambiente?.nome || pmoc.nomeAmbiente}</td>
+                  <td className="border p-2">{pmoc.cidade}</td>
+                  <td className="border p-2">{new Date(pmoc.criadoEm).toLocaleDateString()}</td>
                   <td className="p-2 flex gap-2">
                     <button
                       onClick={() => abrirEdicao(pmoc)}
@@ -140,6 +149,7 @@ export default function ListaPMOC() {
                 </tr>
               ))}
             </tbody>
+
           </table>
         </div>
 
