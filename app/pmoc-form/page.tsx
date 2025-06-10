@@ -21,28 +21,18 @@ export default function PMOCForm() {
     const router = useRouter();
     const [dataAtual, setDataAtual] = useState("");
     const [checklist, setChecklist] = useState<ChecklistItem[]>([
-        {
-            descricao: "Verificar sujeira, danos e corrosão",
-            periodicidade: "Mensal",
-            data: "",
-            executadoPor: "",
-            aprovadoPor: "",
-        },
-        {
-            descricao: "Limpar serpentinas e bandejas",
-            periodicidade: "Mensal",
-            data: "",
-            executadoPor: "",
-            aprovadoPor: "",
-        },
-        {
-            descricao: "Verificar controles de vazão",
-            periodicidade: "Mensal",
-            data: "",
-            executadoPor: "",
-            aprovadoPor: "",
-        },
+        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
+        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
+        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
+        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
+        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
+        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
+        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
+        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
+        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
+        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
     ]);
+
 
 
     const [formData, setFormData] = useState({
@@ -193,7 +183,7 @@ export default function PMOCForm() {
                             </select>
 
 
-                            <select name="tagSelecionada" value={formData.tagSelecionada} onChange={handleChange}  className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400">
+                            <select name="tagSelecionada" value={formData.tagSelecionada} onChange={handleChange} className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400">
                                 <option value="">Selecione uma TAG</option>
                                 {tags.map((tag) => (
                                     <option key={tag.id} value={tag.id}>
