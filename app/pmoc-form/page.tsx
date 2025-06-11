@@ -138,7 +138,7 @@ export default function PMOCForm() {
                                     placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
                                     value={formData[field as keyof typeof formData]}
                                     onChange={handleChange}
-                                    className="border rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                                    className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"
                                 />
                             ))}
                         </div>
@@ -170,7 +170,7 @@ export default function PMOCForm() {
                                 name="ambienteSelecionado"
                                 value={formData.ambienteSelecionado}
                                 onChange={handleChange}
-                                className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400"
+                                className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"
                             >
                                 <option value="">Selecione um ambiente</option>
                                 {ambientes.map((amb) => (
@@ -181,8 +181,7 @@ export default function PMOCForm() {
 
                             </select>
 
-
-                            <select name="tagSelecionada" value={formData.tagSelecionada} onChange={handleChange} className="border rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400">
+                            <select name="tagSelecionada" value={formData.tagSelecionada} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2">
                                 <option value="">Selecione uma TAG</option>
                                 {tags.map((tag) => (
                                     <option key={tag.id} value={tag.id}>
