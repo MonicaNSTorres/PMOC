@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Pencil, Trash2, Plus, X } from "lucide-react";
 import BackButton from "../components/back-button/back-button";
 
 interface Servico {
@@ -54,6 +54,12 @@ export default function ListarServicos() {
     setFormEdit((prev) => ({ ...prev, [field]: value }));
   }
 
+  const closeModal = () => {
+    setEditingId(null);
+    setShowCreateModal(false);
+  };
+
+
   return (
     <div className="flex flex-col pl-[9%] pr-[10%] min-h-screen bg-gray-200 p-4">
       <div className="max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
@@ -62,7 +68,7 @@ export default function ListarServicos() {
           <h1 className="text-2xl font-bold mb-6">Serviços Cadastrados</h1>
           <button
             onClick={() => {
-              setFormEdit({ nome: ""});
+              setFormEdit({ nome: "" });
               setShowCreateModal(true);
             }}
             className="bg-green-800 hover:bg-green-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center gap-2"
@@ -75,7 +81,7 @@ export default function ListarServicos() {
           <thead className="bg-blue-100 text-left">
             <tr>
               <th className="border p-2">Nome</th>
-              <th className="border p-2"></th>
+              <th className="border p-2">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -96,8 +102,9 @@ export default function ListarServicos() {
         </table>
 
         {(editingId || showCreateModal) && (
-          <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
+          <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50" onClick={closeModal}>
+            <div className="relative bg-white p-6 rounded shadow-md w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+              <X size={30} className="absolute top-4 right-4 cursor-pointer font-semibold text-gray-500 hover:text-red-600 text-lg" onClick={closeModal} />
               <h2 className="text-xl font-semibold mb-4">
                 {editingId ? `Editar Servico` : "Nova Servico"}
               </h2>
@@ -121,14 +128,12 @@ export default function ListarServicos() {
                       setEditingId(null);
                       setShowCreateModal(false);
                     }}
-                    className="border px-4 py-2 rounded"
-                  >
+                    className="border px-4 py-2 rounded hover:cursor-pointer">
                     Cancelar
                   </button>
                   <button
                     type="submit"
-                    className="bg-blue-600 text-white px-4 py-2 rounded"
-                  >
+                    className="bg-blue-800 text-white px-4 py-2 rounded hover:cursor-pointer hover:bg-blue-600">
                     Salvar
                   </button>
                 </div>

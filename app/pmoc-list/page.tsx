@@ -115,12 +115,12 @@ export default function ListaPMOC() {
           <table className="w-full text-md border bg-white shadow-md">
             <thead className="text-gray-700 bg-blue-100">
               <tr>
-                <th className="border p-2 text-left">TAG</th>
-                <th className="border p-2 text-left">Unidade</th>
-                <th className="border p-2 text-left">Ambiente</th>
-                <th className="border p-2 text-left">Cidade</th>
-                <th className="border p-2 text-left">Data Cadastro</th>
-                <th className="border p-2 text-left">Ações</th>
+                <th className="border p-2">TAG</th>
+                <th className="border p-2">Unidade</th>
+                <th className="border p-2">Ambiente</th>
+                <th className="border p-2">Cidade</th>
+                <th className="border p-2">Data Cadastro</th>
+                <th className="border p-2">Ações</th>
               </tr>
             </thead>
 

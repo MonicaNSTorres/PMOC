@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Pencil, Trash2, Plus, X } from "lucide-react";
 import BackButton from "../components/back-button/back-button";
 
 interface Ambiente {
@@ -55,6 +55,12 @@ export default function ListaAmbientes() {
     setFormEdit((prev) => ({ ...prev, [field]: value }));
   }
 
+  const closeModal = () => {
+    setEditingId(null);
+    setShowCreateModal(false);
+  };
+
+
   return (
     <div className="flex flex-col pl-[9%] pr-[10%] min-h-screen bg-gray-200 p-4">
       <div className="max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
@@ -77,6 +83,7 @@ export default function ListaAmbientes() {
             <tr>
               <th className="border p-2">Nome</th>
               <th className="border p-2">Local</th>
+              <th className="border p-2">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -98,8 +105,9 @@ export default function ListaAmbientes() {
         </table>
 
         {(editingId || showCreateModal) && (
-          <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
+          <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50" onClick={closeModal}>
+            <div className="relative bg-white p-6 rounded shadow-md w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+              <X size={30} className="absolute top-4 right-4 cursor-pointer font-semibold text-gray-500 hover:text-red-600 text-lg" onClick={closeModal} />
               <h2 className="text-xl font-semibold mb-4">
                 {editingId ? `Editar Ambiente` : "Nova Ambiente"}
               </h2>
@@ -113,30 +121,29 @@ export default function ListaAmbientes() {
                 <input
                   className="border p-2 rounded w-full"
                   value={formEdit.nome || ""}
-                  onChange={(e) => handleInputChange("nome", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("nome", e.target.value)
+                  }
                   placeholder="Nome do ambiente"
                 />
                 <input
                   className="border p-2 rounded w-full"
                   value={formEdit.local || ""}
-                  onChange={(e) => handleInputChange("local", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("local", e.target.value)
+                  }
                   placeholder="Local do ambiente"
                 />
                 <div className="flex justify-end gap-2">
                   <button
                     type="button"
-                    onClick={() => {
-                      setEditingId(null);
-                      setShowCreateModal(false);
-                    }}
-                    className="border px-4 py-2 rounded"
-                  >
+                    onClick={closeModal}
+                    className="border px-4 py-2 rounded hover:cursor-pointer">
                     Cancelar
                   </button>
                   <button
                     type="submit"
-                    className="bg-blue-600 text-white px-4 py-2 rounded"
-                  >
+                    className="bg-blue-800 text-white px-4 py-2 rounded hover:cursor-pointer hover:bg-blue-600">
                     Salvar
                   </button>
                 </div>
