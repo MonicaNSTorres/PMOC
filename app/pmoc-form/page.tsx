@@ -147,19 +147,19 @@ export default function PMOCForm() {
                     <section>
                         <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">2 - Identificação do Proprietário</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <input name="nomeProprietario" placeholder="Nome/Razão Social" value={formData.nomeProprietario} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
-                            <input name="cgcProprietario" placeholder="CIC/CGC" value={formData.cgcProprietario} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
-                            <input name="enderecoProprietario" placeholder="Endereço completo" value={formData.enderecoProprietario} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
+                            <input name="nomeProprietario" placeholder="Nome/Razão Social" value={formData.nomeProprietario} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2" />
+                            <input name="cgcProprietario" placeholder="CIC/CGC" value={formData.cgcProprietario} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2" />
+                            <input name="enderecoProprietario" placeholder="Endereço completo" value={formData.enderecoProprietario} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2" />
                         </div>
                     </section>
 
                     <section>
                         <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">3 - Responsável Técnico</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <input name="nomeResponsavel" placeholder="Nome/Razão Social" value={formData.nomeResponsavel} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
-                            <input name="cgcResponsavel" placeholder="CIC/CGC" value={formData.cgcResponsavel} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
-                            <input name="conselho" placeholder="Registro no Conselho de Classe" value={formData.conselho} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
-                            <input name="art" placeholder="ART (Anotação de Responsabilidade Técnica)" value={formData.art} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
+                            <input name="nomeResponsavel" placeholder="Nome/Razão Social" value={formData.nomeResponsavel} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2" />
+                            <input name="cgcResponsavel" placeholder="CIC/CGC" value={formData.cgcResponsavel} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2" />
+                            <input name="conselho" placeholder="Registro no Conselho de Classe" value={formData.conselho} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2" />
+                            <input name="art" placeholder="ART (Anotação de Responsabilidade Técnica)" value={formData.art} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2" />
                         </div>
                     </section>
 
@@ -193,55 +193,65 @@ export default function PMOCForm() {
                         </div>
                     </section>
 
-                    <section>
-                        <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">5 - Plano de Manutenção e Controle</h3>
-                        <div className="overflow-auto rounded-lg shadow-md">
-                            <table className="w-full text-md border-collapse">
-                                <thead className="bg-blue-100 text-gray-700">
-                                    <tr>
-                                        <th className="border p-3">Descrição</th>
-                                        <th className="border p-3">Periodicidade</th>
-                                        <th className="border p-3">Data Execução</th>
-                                        <th className="border p-3">Executado por</th>
-                                        <th className="border p-3">Aprovado por</th>
+                    <div className="sm:overflow-x-auto md:overflow-auto rounded-lg shadow-md">
+                        <table className="w-full table-fixed text-xs md:text-sm border-collapse">
+                            <thead className="bg-blue-100 text-gray-700">
+                                <tr>
+                                    <th className="border p-2 w-2/5">Descrição</th>
+                                    <th className="border p-2 w-1/5">Periodicidade</th>
+                                    <th className="border p-2 w-1/5">Data Execução</th>
+                                    <th className="border p-2 w-1/5">Executado por</th>
+                                    <th className="border p-2 w-1/5">Aprovado por</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {checklist.map((item, i) => (
+                                    <tr key={i} className="odd:bg-white even:bg-gray-50 hover:bg-gray-100">
+                                        <td className="border p-1">
+                                            <select
+                                                className="w-full border rounded px-1 py-1 focus:ring-2 focus:ring-blue-400 text-xs"
+                                                value={item.descricao}
+                                                onChange={(e) => handleChecklistChange(i, "descricao", e.target.value)}
+                                            >
+                                                <option value="">Selecione um serviço</option>
+                                                {servicos.map((srv) => (
+                                                    <option key={srv.id} value={srv.nome}>
+                                                        {srv.nome}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </td>
+                                        <td className="border p-1 text-center">{item.periodicidade}</td>
+                                        <td className="border p-1">
+                                            <input
+                                                type="date"
+                                                className="w-full border rounded px-1 py-1 focus:ring-2 focus:ring-blue-400 text-xs"
+                                                value={item.data}
+                                                onChange={(e) => handleChecklistChange(i, "data", e.target.value)}
+                                            />
+                                        </td>
+                                        <td className="border p-1">
+                                            <input
+                                                type="text"
+                                                className="w-full border rounded px-1 py-1 focus:ring-2 focus:ring-blue-400 text-xs"
+                                                value={item.executadoPor}
+                                                onChange={(e) => handleChecklistChange(i, "executadoPor", e.target.value)}
+                                            />
+                                        </td>
+                                        <td className="border p-1">
+                                            <input
+                                                type="text"
+                                                className="w-full border rounded px-1 py-1 focus:ring-2 focus:ring-blue-400 text-xs"
+                                                value={item.aprovadoPor}
+                                                onChange={(e) => handleChecklistChange(i, "aprovadoPor", e.target.value)}
+                                            />
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {checklist.map((item, index) => (
-                                        <tr key={index} className="odd:bg-white even:bg-gray-50 hover:bg-gray-100">
-                                            <td className="border p-2">
-                                                <select
-                                                    className="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-400"
-                                                    value={item.descricao}
-                                                    onChange={(e) => handleChecklistChange(index, "descricao", e.target.value)}
-                                                >
-                                                    <option value="">Selecione um serviço</option>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
 
-                                                    {servicos.map((srv) => (
-                                                        <option key={srv.id} value={srv.nome}>
-                                                            {srv.nome}
-                                                        </option>
-
-                                                    ))}
-                                                </select>
-                                            </td>
-
-                                            <td className="border p-2">{item.periodicidade}</td>
-                                            <td className="border p-2">
-                                                <input type="date" className="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-400" value={item.data} onChange={(e) => handleChecklistChange(index, "data", e.target.value)} />
-                                            </td>
-                                            <td className="border p-2">
-                                                <input type="text" className="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-400" value={item.executadoPor} onChange={(e) => handleChecklistChange(index, "executadoPor", e.target.value)} />
-                                            </td>
-                                            <td className="border p-2">
-                                                <input type="text" className="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-400" value={item.aprovadoPor} onChange={(e) => handleChecklistChange(index, "aprovadoPor", e.target.value)} />
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
 
                     <div className="pt-6 text-center">
                         <button type="submit" className="bg-blue-800 hover:bg-blue-600 cursor-pointer text-white font-semibold py-3 px-6 rounded-md transition shadow-md">
