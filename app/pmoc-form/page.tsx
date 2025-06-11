@@ -123,12 +123,11 @@ export default function PMOCForm() {
                     <div></div>{/*espaco vazio para alinhar a direita*/}
                     <span className="text-md text-gray-700 font-semibold">{`Data da geração: ${dataAtual}`}</span>
                 </div>
-                <h2 className="text-3xl font-bold mb-10 text-center text-gray-800">
+                <h2 className="text-sm text-left font-bold mb-10 text-gray-800 md:text-3xl md:text-center">
                     Plano de Manutenção, Operação e Controle - PMOC
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-12">
-
                     <section>
                         <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">1 - Identificação do Ambiente</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -148,19 +147,19 @@ export default function PMOCForm() {
                     <section>
                         <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">2 - Identificação do Proprietário</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <input name="nomeProprietario" placeholder="Nome/Razão Social" value={formData.nomeProprietario} onChange={handleChange} className="border rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400" />
-                            <input name="cgcProprietario" placeholder="CIC/CGC" value={formData.cgcProprietario} onChange={handleChange} className="border rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400" />
-                            <input name="enderecoProprietario" placeholder="Endereço completo" value={formData.enderecoProprietario} onChange={handleChange} className="md:col-span-2 border rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400" />
+                            <input name="nomeProprietario" placeholder="Nome/Razão Social" value={formData.nomeProprietario} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
+                            <input name="cgcProprietario" placeholder="CIC/CGC" value={formData.cgcProprietario} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
+                            <input name="enderecoProprietario" placeholder="Endereço completo" value={formData.enderecoProprietario} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
                         </div>
                     </section>
 
                     <section>
                         <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">3 - Responsável Técnico</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <input name="nomeResponsavel" placeholder="Nome/Razão Social" value={formData.nomeResponsavel} onChange={handleChange} className="border rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400" />
-                            <input name="cgcResponsavel" placeholder="CIC/CGC" value={formData.cgcResponsavel} onChange={handleChange} className="border rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400" />
-                            <input name="conselho" placeholder="Registro no Conselho de Classe" value={formData.conselho} onChange={handleChange} className="border rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400" />
-                            <input name="art" placeholder="ART (Anotação de Responsabilidade Técnica)" value={formData.art} onChange={handleChange} className="border rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400" />
+                            <input name="nomeResponsavel" placeholder="Nome/Razão Social" value={formData.nomeResponsavel} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
+                            <input name="cgcResponsavel" placeholder="CIC/CGC" value={formData.cgcResponsavel} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
+                            <input name="conselho" placeholder="Registro no Conselho de Classe" value={formData.conselho} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
+                            <input name="art" placeholder="ART (Anotação de Responsabilidade Técnica)" value={formData.art} onChange={handleChange} className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"/>
                         </div>
                     </section>
 
