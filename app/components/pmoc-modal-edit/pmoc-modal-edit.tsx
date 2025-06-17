@@ -158,8 +158,6 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
     const ambienteSelecionado = ambientes.find(a => String(a.id) === String(formData.ambienteSelecionado));
     const tagSelecionada = tags.find(t => String(t.id) === String(formData.tagSelecionada));
 
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(12);
     const hoje = new Date();
     const dataGeracao = hoje.toLocaleDateString("pt-BR", {
       day: "2-digit",
@@ -167,51 +165,76 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
       year: "numeric",
     });
 
+    let y = 15;
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.text("PLANO DE MANUTENÇÃO, OPERAÇÃO E CONTROLE - PMOC", 105, y, { align: "center" });
+
+    y += 8;
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
-    doc.text(`Data de Geração: ${dataGeracao}`, 200, 10, { align: "right" });
+    doc.text(`Data de Geração: ${dataGeracao}`, 200, y, { align: "right" });
 
-    doc.text("PLANO DE MANUTENÇÃO, OPERAÇÃO E CONTROLE - PMOC", 105, 15, { align: "center" });
-
+    y += 10;
+    doc.setFont("helvetica", "bold");
     doc.setFontSize(10);
-    doc.setFont("helvetica", "bold");
-    doc.text("1 - Identificação do Ambiente ou Conjunto de Ambientes:", 10, 25);
+    doc.text("1 - Identificação do Ambiente ou Conjunto de Ambientes:", 10, y);
 
     doc.setFont("helvetica", "normal");
-    doc.text(`Nome (Edifício/Entidade): ${formData.nomeAmbiente || ""}`, 10, 32);
-    doc.text(`Endereço completo: ${formData.endereco || ""}, Nº: ${formData.numero || ""}`, 10, 38);
-    doc.text(`Complemento / Bairro / Cidade / UF: ${formData.bairro || ""} / ${formData.cidade || ""} / ${formData.uf || ""}`, 10, 44);
-    doc.text(`Telefone: ${formData.telefone || ""}`, 10, 50);
+    y += 7;
+    doc.text(`Nome (Edifício/Entidade): ${formData.nomeAmbiente || ""}`, 10, y);
+    y += 6;
+    doc.text(`Endereço completo: ${formData.endereco || ""}, Nº: ${formData.numero || ""}`, 10, y);
+    y += 6;
+    doc.text(`Complemento / Bairro / Cidade / UF: ${formData.bairro || ""} / ${formData.cidade || ""} / ${formData.uf || ""}`, 10, y);
+    y += 6;
+    doc.text(`Telefone: ${formData.telefone || ""}`, 10, y);
 
+    y += 10;
     doc.setFont("helvetica", "bold");
-    doc.text("2 - Identificação do Proprietário, Locatário ou Preposto:", 10, 60);
+    doc.text("2 - Identificação do Proprietário, Locatário ou Preposto:", 10, y);
     doc.setFont("helvetica", "normal");
-    doc.text(`Nome/Razão Social: ${formData.nomeProprietario || ""}`, 10, 66);
-    doc.text(`CIC/CGC: ${formData.cgcProprietario || ""}`, 10, 72);
-    doc.text(`Endereço completo: ${formData.enderecoProprietario || ""}`, 10, 78);
+    y += 7;
+    doc.text(`Nome/Razão Social: ${formData.nomeProprietario || ""}`, 10, y);
+    y += 6;
+    doc.text(`CIC/CGC: ${formData.cgcProprietario || ""}`, 10, y);
+    y += 6;
+    doc.text(`Endereço completo: ${formData.enderecoProprietario || ""}`, 10, y);
 
+    y += 10;
     doc.setFont("helvetica", "bold");
-    doc.text("3 - Identificação do Responsável Técnico:", 10, 88);
+    doc.text("3 - Identificação do Responsável Técnico:", 10, y);
     doc.setFont("helvetica", "normal");
-    doc.text(`Nome/Razão Social: ${formData.nomeResponsavel || ""}`, 10, 94);
-    doc.text(`CIC/CGC: ${formData.cgcResponsavel || ""}`, 10, 100);
-    doc.text(`Registro no Conselho: ${formData.conselho || ""}`, 10, 106);
-    doc.text(`ART: ${formData.art || ""}`, 10, 112);
+    y += 7;
+    doc.text(`Nome/Razão Social: ${formData.nomeResponsavel || ""}`, 10, y);
+    y += 6;
+    doc.text(`CIC/CGC: ${formData.cgcResponsavel || ""}`, 10, y);
+    y += 6;
+    doc.text(`Registro no Conselho: ${formData.conselho || ""}`, 10, y);
+    y += 6;
+    doc.text(`ART: ${formData.art || ""}`, 10, y);
 
+    y += 10;
     doc.setFont("helvetica", "bold");
-    doc.text("4 - Relação dos Ambientes Climatizados:", 10, 122);
+    doc.text("4 - Relação dos Ambientes Climatizados:", 10, y);
     doc.setFont("helvetica", "normal");
-    doc.text(`Ambiente: ${ambienteSelecionado?.nome || ""}`, 10, 128);
-    doc.text(`Serviço: ${formData.servicoSelecionado || ""}`, 10, 134);
-    doc.text(`TAG: ${tagSelecionada ? `${tagSelecionada.tag} - ${tagSelecionada.unidade} - ${tagSelecionada.local}` : ""}`, 10, 134);
+    y += 7;
+    doc.text(`Ambiente: ${ambienteSelecionado?.nome || ""}`, 10, y);
+    y += 6;
+    doc.text(`TAG: ${tagSelecionada ? `${tagSelecionada.tag} - ${tagSelecionada.unidade} - ${tagSelecionada.local}` : ""}`, 10, y);
+    y += 6;
     doc.setFontSize(8);
-    doc.text("NOTA: anexar Projeto de Instalação do sistema de climatização", 10, 146);
+    doc.text("NOTA: anexar Projeto de Instalação do sistema de climatização", 10, y);
 
+    y += 10;
     doc.setFont("helvetica", "bold");
     doc.setFontSize(10);
-    doc.text("5 - Plano de Manutenção e Controle", 10, 156);
+    doc.text("5 - Plano de Manutenção e Controle", 10, y);
 
+    // Tabela
     autoTable(doc, {
+      startY: y + 4,
       head: [["Descrição", "Periodicidade", "Data Execução", "Executado por", "Aprovado por"]],
       body: checklist.map((item: ChecklistItem) => [
         item.descricao,
@@ -220,15 +243,14 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
         item.executadoPor,
         item.aprovadoPor,
       ]),
-      startY: 160,
       styles: {
         fontSize: 9,
-        cellPadding: { top: 4, bottom: 4 },
+        cellPadding: { top: 3, bottom: 3 },
       },
       headStyles: { fillColor: [230, 230, 230], textColor: 0 },
     });
 
-    const finalY = (doc as any).lastAutoTable.finalY + 10;
+    const finalY = (doc as any).lastAutoTable.finalY + 20;
     doc.setFont("helvetica", "normal");
     doc.line(20, finalY, 90, finalY);
     doc.line(120, finalY, 190, finalY);
@@ -237,6 +259,7 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
 
     doc.save("PMOC-preenchido.pdf");
   }
+
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -263,7 +286,7 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div ref={modalRef} className="relative bg-white p-6 rounded shadow-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <button onClick={onCancel} className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-lg font-bold">
-          <X size={30} className="cursor-pointer font-semibold"/>
+          <X size={30} className="cursor-pointer font-semibold" />
         </button>
         <h1 className="text-2xl font-bold mb-6">Editar PMOCs</h1>
         <div id="pmoc-pdf" className="bg-white p-4">
