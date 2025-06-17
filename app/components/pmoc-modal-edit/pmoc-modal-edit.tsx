@@ -245,10 +245,19 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
       ]),
       styles: {
         fontSize: 9,
-        cellPadding: { top: 3, bottom: 3 },
+        cellPadding: { top: 5, bottom: 5 }, // aumenta altura das células
       },
-      headStyles: { fillColor: [230, 230, 230], textColor: 0 },
+      headStyles: {
+        fillColor: [230, 230, 230],
+        textColor: 0,
+        fontStyle: "bold",
+        halign: "left",
+        valign: "middle",
+        cellPadding: { top: 6, bottom: 6 }, // espaçamento maior no cabeçalho
+      },
+      alternateRowStyles: { fillColor: [245, 245, 245] },
     });
+
 
     const finalY = (doc as any).lastAutoTable.finalY + 20;
     doc.setFont("helvetica", "normal");
