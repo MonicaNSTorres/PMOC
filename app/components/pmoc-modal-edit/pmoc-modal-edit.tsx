@@ -244,10 +244,10 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
         item.aprovadoPor,
       ]),
       styles: {
-        fontSize: 9,
+        fontSize: 7,
         cellPadding: { top: 3, bottom: 3, right: 3, left: 3 },
       },
-      headStyles: { fillColor: [230, 230, 230], textColor: 0 },
+      headStyles: { fillColor: [230, 230, 230], textColor: 0, fontSize: 8 },
     });
 
     const finalY = (doc as any).lastAutoTable.finalY + 20;
