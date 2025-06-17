@@ -24,11 +24,12 @@ export default function PMOCForm() {
         Array.from({ length: 10 }, () => ({
             descricao: "",
             periodicidade: "Mensal",
-            data: getTodayISO(), // preenche com hoje
+            data: getTodayISO(),
             executadoPor: "",
-            aprovadoPor: "",
+            aprovadoPor: "Luiz Carlos Pellegrini Junior",
         }))
     );
+
 
 
     const [formData, setFormData] = useState({
@@ -131,7 +132,36 @@ export default function PMOCForm() {
                     <section>
                         <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">1 - Identificação do Ambiente</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {["nomeAmbiente", "endereco", "numero", "bairro", "cidade", "uf", "telefone"].map((field) => (
+
+                            <select
+                                name="ambienteSelecionado"
+                                value={formData.ambienteSelecionado}
+                                onChange={handleChange}
+                                className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"
+                            >
+                                <option value="">Selecione um ambiente</option>
+                                {ambientes.map((amb) => (
+                                    <option key={amb.id} value={amb.id}>
+                                        {amb.nome}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <select
+                                name="tagSelecionada"
+                                value={formData.tagSelecionada}
+                                onChange={handleChange}
+                                className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"
+                            >
+                                <option value="">Selecione uma TAG</option>
+                                {tags.map((tag) => (
+                                    <option key={tag.id} value={tag.id}>
+                                        {tag.tag} - {tag.unidade} - {tag.local}
+                                    </option>
+                                ))}
+                            </select>
+
+                            {["endereco", "numero", "bairro", "cidade", "uf", "telefone"].map((field) => (
                                 <input
                                     key={field}
                                     name={field}
@@ -141,6 +171,7 @@ export default function PMOCForm() {
                                     className="md:col-span-2 w-full max-w-xs md:max-w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none md:text-base md:px-4 md:py-2"
                                 />
                             ))}
+
                         </div>
                     </section>
 
@@ -163,7 +194,7 @@ export default function PMOCForm() {
                         </div>
                     </section>
 
-                    <section>
+                    {/*<section>
                         <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">4 - Ambientes Climatizados</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <select
@@ -191,7 +222,7 @@ export default function PMOCForm() {
                             </select>
 
                         </div>
-                    </section>
+                    </section>*/}
 
                     <div className="sm:overflow-x-auto md:overflow-auto rounded-lg shadow-md">
                         <table className="w-full table-fixed text-xs md:text-sm border-collapse">

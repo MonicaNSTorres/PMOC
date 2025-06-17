@@ -183,13 +183,16 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
 
     doc.setFont("helvetica", "normal");
     y += 7;
-    doc.text(`Nome (Edifício/Entidade): ${formData.nomeAmbiente || ""}`, 10, y);
+    doc.text(`Nome (Edifício/Entidade): ${ambienteSelecionado?.nome || ""}`, 10, y);
+    y += 6;
+    doc.text(`TAG: ${tagSelecionada ? `${tagSelecionada.tag} - ${tagSelecionada.unidade} - ${tagSelecionada.local}` : ""}`, 10, y);
     y += 6;
     doc.text(`Endereço completo: ${formData.endereco || ""}, Nº: ${formData.numero || ""}`, 10, y);
     y += 6;
     doc.text(`Complemento / Bairro / Cidade / UF: ${formData.bairro || ""} / ${formData.cidade || ""} / ${formData.uf || ""}`, 10, y);
     y += 6;
     doc.text(`Telefone: ${formData.telefone || ""}`, 10, y);
+
 
     y += 10;
     doc.setFont("helvetica", "bold");
@@ -215,7 +218,7 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
     y += 6;
     doc.text(`ART: ${formData.art || ""}`, 10, y);
 
-    y += 10;
+    /*y += 10;
     doc.setFont("helvetica", "bold");
     doc.text("4 - Relação dos Ambientes Climatizados:", 10, y);
     doc.setFont("helvetica", "normal");
@@ -225,7 +228,7 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
     doc.text(`TAG: ${tagSelecionada ? `${tagSelecionada.tag} - ${tagSelecionada.unidade} - ${tagSelecionada.local}` : ""}`, 10, y);
     y += 6;
     doc.setFontSize(8);
-    doc.text("NOTA: anexar Projeto de Instalação do sistema de climatização", 10, y);
+    doc.text("NOTA: anexar Projeto de Instalação do sistema de climatização", 10, y);*/
 
     y += 10;
     doc.setFont("helvetica", "bold");
@@ -292,20 +295,7 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
         <div id="pmoc-pdf" className="bg-white p-4">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input name="nomeAmbiente" value={formData.nomeAmbiente} onChange={handleChange} className="border p-2 rounded" placeholder="Nome do Ambiente" />
-              <input name="endereco" value={formData.endereco} onChange={handleChange} className="border p-2 rounded" placeholder="Endereço" />
-              <input name="numero" value={formData.numero} onChange={handleChange} className="border p-2 rounded" placeholder="Número" />
-              <input name="bairro" value={formData.bairro} onChange={handleChange} className="border p-2 rounded" placeholder="Bairro" />
-              <input name="cidade" value={formData.cidade} onChange={handleChange} className="border p-2 rounded" placeholder="Cidade" />
-              <input name="uf" value={formData.uf} onChange={handleChange} className="border p-2 rounded" placeholder="UF" />
-              <input name="telefone" value={formData.telefone} onChange={handleChange} className="border p-2 rounded" placeholder="Telefone" />
-              <input name="nomeProprietario" value={formData.nomeProprietario} onChange={handleChange} className="border p-2 rounded" placeholder="Nome Proprietário" />
-              <input name="cgcProprietario" value={formData.cgcProprietario} onChange={handleChange} className="border p-2 rounded" placeholder="CGC Proprietário" />
-              <input name="enderecoProprietario" value={formData.enderecoProprietario} onChange={handleChange} className="border p-2 rounded" placeholder="Endereço Proprietário" />
-              <input name="nomeResponsavel" value={formData.nomeResponsavel} onChange={handleChange} className="border p-2 rounded" placeholder="Nome Responsável" />
-              <input name="cgcResponsavel" value={formData.cgcResponsavel} onChange={handleChange} className="border p-2 rounded" placeholder="CGC Responsável" />
-              <input name="conselho" value={formData.conselho} onChange={handleChange} className="border p-2 rounded" placeholder="Conselho" />
-              <input name="art" value={formData.art} onChange={handleChange} className="border p-2 rounded" placeholder="ART" />
+              {/* Select de Ambiente */}
               <select
                 name="ambienteSelecionado"
                 value={formData.ambienteSelecionado}
@@ -320,10 +310,7 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
                 ))}
               </select>
 
-              {/*<select name="servicoSelecionado" value={formData.servicoSelecionado} onChange={handleChange} className="border p-2 rounded">
-                <option value="">Selecione um serviço</option>
-                {servicos.map((srv, i) => <option key={i} value={srv}>{srv}</option>)}
-              </select>*/}
+              {/* Select de TAG */}
               <select
                 name="tagSelecionada"
                 value={formData.tagSelecionada}
@@ -337,6 +324,47 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
                   </option>
                 ))}
               </select>
+
+              <input name="endereco" value={formData.endereco} onChange={handleChange} className="border p-2 rounded" placeholder="Endereço" />
+              <input name="numero" value={formData.numero} onChange={handleChange} className="border p-2 rounded" placeholder="Número" />
+              <input name="bairro" value={formData.bairro} onChange={handleChange} className="border p-2 rounded" placeholder="Bairro" />
+              <input name="cidade" value={formData.cidade} onChange={handleChange} className="border p-2 rounded" placeholder="Cidade" />
+              <input name="uf" value={formData.uf} onChange={handleChange} className="border p-2 rounded" placeholder="UF" />
+              <input name="telefone" value={formData.telefone} onChange={handleChange} className="border p-2 rounded" placeholder="Telefone" />
+              <input name="nomeProprietario" value={formData.nomeProprietario} onChange={handleChange} className="border p-2 rounded" placeholder="Nome Proprietário" />
+              <input name="cgcProprietario" value={formData.cgcProprietario} onChange={handleChange} className="border p-2 rounded" placeholder="CGC Proprietário" />
+              <input name="enderecoProprietario" value={formData.enderecoProprietario} onChange={handleChange} className="border p-2 rounded" placeholder="Endereço Proprietário" />
+              <input name="nomeResponsavel" value={formData.nomeResponsavel} onChange={handleChange} className="border p-2 rounded" placeholder="Nome Responsável" />
+              <input name="cgcResponsavel" value={formData.cgcResponsavel} onChange={handleChange} className="border p-2 rounded" placeholder="CGC Responsável" />
+              <input name="conselho" value={formData.conselho} onChange={handleChange} className="border p-2 rounded" placeholder="Conselho" />
+              <input name="art" value={formData.art} onChange={handleChange} className="border p-2 rounded" placeholder="ART" />
+              {/*<select
+                name="ambienteSelecionado"
+                value={formData.ambienteSelecionado}
+                onChange={handleChange}
+                className="border p-2 rounded"
+              >
+                <option value="">Selecione um Ambiente</option>
+                {ambientes.map((amb) => (
+                  <option key={amb.id} value={String(amb.id)}>
+                    {amb.nome}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                name="tagSelecionada"
+                value={formData.tagSelecionada}
+                onChange={handleChange}
+                className="border p-2 rounded"
+              >
+                <option value="">Selecione uma TAG</option>
+                {tags.map((tag) => (
+                  <option key={tag.id} value={String(tag.id)}>
+                    {tag.tag} - {tag.unidade} - {tag.local}
+                  </option>
+                ))}
+              </select>*/}
 
             </div>
 
