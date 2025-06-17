@@ -155,6 +155,8 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
 
   function handleGeneratePDF() {
     const doc = new jsPDF();
+    const ambienteSelecionado = ambientes.find(a => String(a.id) === String(formData.ambienteSelecionado));
+    const tagSelecionada = tags.find(t => String(t.id) === String(formData.tagSelecionada));
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(12);
@@ -199,9 +201,9 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
     doc.setFont("helvetica", "bold");
     doc.text("4 - Relação dos Ambientes Climatizados:", 10, 122);
     doc.setFont("helvetica", "normal");
-    doc.text(`Ambiente: ${formData.ambienteSelecionado || ""}`, 10, 128);
+    doc.text(`Ambiente: ${ambienteSelecionado?.nome || ""}`, 10, 128);
     doc.text(`Serviço: ${formData.servicoSelecionado || ""}`, 10, 134);
-    doc.text(`TAG: ${formData.tagSelecionada || ""}`, 10, 140);
+    doc.text(`TAG: ${tagSelecionada ? `${tagSelecionada.tag} - ${tagSelecionada.unidade} - ${tagSelecionada.local}` : ""}`, 10, 134);
     doc.setFontSize(8);
     doc.text("NOTA: anexar Projeto de Instalação do sistema de climatização", 10, 146);
 

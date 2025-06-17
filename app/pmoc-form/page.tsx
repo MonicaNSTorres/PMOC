@@ -46,15 +46,14 @@ export default function PMOCForm() {
         nomeProprietario: "",
         cgcProprietario: "",
         enderecoProprietario: "",
-        nomeResponsavel: "",
-        cgcResponsavel: "",
-        conselho: "",
-        art: "",
+        nomeResponsavel: "LUIZ CARLOS PELLEGRINI JUNIOR",
+        cgcResponsavel: "0682189924", // CREASP
+        conselho: "Engenheiro Industrial - Mecânica - RNP 2602139106",
+        art: "2620250917094",
         ambienteSelecionado: "",
         servicoSelecionado: "",
         tagSelecionada: "",
     });
-
 
     useEffect(() => {
         async function fetchSelects() {
