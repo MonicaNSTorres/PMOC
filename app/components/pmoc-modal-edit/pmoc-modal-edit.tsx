@@ -234,7 +234,7 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
 
     // Tabela
     autoTable(doc, {
-      startY: y + 4,
+      startY: y + 2,
       head: [["Descrição", "Periodicidade", "Data Execução", "Executado por", "Aprovado por"]],
       body: checklist.map((item: ChecklistItem) => [
         item.descricao,
@@ -245,19 +245,10 @@ export default function PMOCFormEditable({ initialData, onCancel, onSave }: Prop
       ]),
       styles: {
         fontSize: 9,
-        cellPadding: { top: 5, bottom: 5 }, // aumenta altura das células
+        cellPadding: { top: 3, bottom: 3, right: 3, left: 3 },
       },
-      headStyles: {
-        fillColor: [230, 230, 230],
-        textColor: 0,
-        fontStyle: "bold",
-        halign: "left",
-        valign: "middle",
-        cellPadding: { top: 6, bottom: 6 }, // espaçamento maior no cabeçalho
-      },
-      alternateRowStyles: { fillColor: [245, 245, 245] },
+      headStyles: { fillColor: [230, 230, 230], textColor: 0 },
     });
-
 
     const finalY = (doc as any).lastAutoTable.finalY + 20;
     doc.setFont("helvetica", "normal");
