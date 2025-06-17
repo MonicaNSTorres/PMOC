@@ -20,19 +20,15 @@ export default function PMOCForm() {
     const [tags, setTags] = useState<{ id: number; tag: string; unidade: string; local: string }[]>([]);
     const router = useRouter();
     const [dataAtual, setDataAtual] = useState("");
-    const [checklist, setChecklist] = useState<ChecklistItem[]>([
-        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
-        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
-        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
-        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
-        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
-        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
-        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
-        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
-        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
-        { descricao: "", periodicidade: "Mensal", data: "", executadoPor: "", aprovadoPor: "" },
-    ]);
-
+    const [checklist, setChecklist] = useState<ChecklistItem[]>(
+        Array.from({ length: 10 }, () => ({
+            descricao: "",
+            periodicidade: "Mensal",
+            data: getTodayISO(), // preenche com hoje
+            executadoPor: "",
+            aprovadoPor: "",
+        }))
+    );
 
 
     const [formData, setFormData] = useState({
@@ -112,6 +108,11 @@ export default function PMOCForm() {
         });
         setDataAtual(dataFormatada);
     }, []);
+
+    function getTodayISO() {
+        const hoje = new Date();
+        return hoje.toISOString().split("T")[0]; // retorna "2025-06-17"
+    }
 
 
     return (
