@@ -6,161 +6,153 @@ import { useRouter } from "next/navigation";
 import BackButton from "../components/back-button/back-button";
 
 type ChecklistItem = {
-    descricao: string | number;
-    periodicidade: string;
-    data: string;
-    executadoPor: string;
-    aprovadoPor: string;
+  descricao: string | number;
+  periodicidade: string;
+  data: string;
+  executadoPor: string;
+  aprovadoPor: string;
 };
 
-
 export default function PMOCForm() {
-    const [ambientes, setAmbientes] = useState<
-        { id: number; nome: string; endereco: string; numero: string; bairro: string; cidade: string; uf: string; telefone: string }[]
-    >([]);
+  const [ambientes, setAmbientes] = useState<
+    {
+      id: number;
+      nome: string;
+      endereco: string;
+      numero: string;
+      bairro: string;
+      cidade: string;
+      uf: string;
+      telefone: string;
+    }[]
+  >([]);
 
-    const [servicos, setServicos] = useState<{ id: number; nome: string }[]>([]);
-    const [tags, setTags] = useState<{ id: number; tag: string; unidade: string; local: string }[]>([]);
-    const router = useRouter();
-    const [dataAtual, setDataAtual] = useState("");
-    const [checklist, setChecklist] = useState<ChecklistItem[]>(
-        Array.from({ length: 10 }, () => ({
-            descricao: "",
-            periodicidade: "Mensal",
-            data: getTodayISO(),
-            executadoPor: "",
-            aprovadoPor: "",
-        }))
+  const [servicos, setServicos] = useState<{ id: number; nome: string }[]>([]);
+  const [tags, setTags] = useState<
+    { id: number; tag: string; unidade: string; local: string }[]
+  >([]);
+
+  const router = useRouter();
+  const [dataAtual, setDataAtual] = useState("");
+
+  const [checklist, setChecklist] = useState<ChecklistItem[]>(
+    Array.from({ length: 10 }, () => ({
+      descricao: "",
+      periodicidade: "Mensal",
+      data: getTodayISO(),
+      executadoPor: "",
+      aprovadoPor: "",
+    }))
+  );
+
+  const [formData, setFormData] = useState({
+    nomeAmbiente: "",
+    endereco: "",
+    numero: "",
+    bairro: "",
+    cidade: "",
+    uf: "",
+    telefone: "",
+    nomeProprietario: "",
+    cgcProprietario: "",
+    enderecoProprietario: "",
+    nomeResponsavel: "LUIZ CARLOS PELLEGRINI JUNIOR",
+    cgcResponsavel: "0682189924",
+    conselho: "Engenheiro Industrial - Mecânica - RNP 2602139106",
+    art: "2620250917094",
+    ambienteSelecionado: "",
+    servicoSelecionado: "",
+    tagSelecionada: "",
+  });
+
+  // Carrega dados iniciais uma vez
+  useEffect(() => {
+    async function carregarDados() {
+      try {
+        const [resAmbientes, resTags, resServicos] = await Promise.all([
+          axios.get("/api/ambientes"),
+          axios.get("/api/tags"),
+          axios.get("/api/servicos"),
+        ]);
+
+        setAmbientes(resAmbientes.data);
+        setTags(resTags.data);
+        setServicos(resServicos.data);
+      } catch (err) {
+        console.error("Erro ao carregar dados iniciais:", err);
+      }
+    }
+
+    carregarDados();
+  }, []);
+
+  // Preenche os campos ao selecionar um ambiente
+  useEffect(() => {
+    if (!formData.ambienteSelecionado || ambientes.length === 0) return;
+
+    const ambiente = ambientes.find(
+      (a) => String(a.id) === String(formData.ambienteSelecionado)
     );
 
-    const [formData, setFormData] = useState({
-        nomeAmbiente: "",
-        endereco: "",
-        numero: "",
-        bairro: "",
-        cidade: "",
-        uf: "",
-        telefone: "",
-        nomeProprietario: "",
-        cgcProprietario: "",
-        enderecoProprietario: "",
-        nomeResponsavel: "LUIZ CARLOS PELLEGRINI JUNIOR",
-        cgcResponsavel: "0682189924", // CREASP
-        conselho: "Engenheiro Industrial - Mecânica - RNP 2602139106",
-        art: "2620250917094",
-        ambienteSelecionado: "",
-        servicoSelecionado: "",
-        tagSelecionada: "",
+    if (ambiente) {
+      setFormData((prev) => ({
+        ...prev,
+        nomeAmbiente: ambiente.nome,
+        endereco: ambiente.endereco ?? "",
+        numero: ambiente.numero ?? "",
+        bairro: ambiente.bairro ?? "",
+        cidade: ambiente.cidade ?? "",
+        uf: ambiente.uf ?? "",
+        telefone: ambiente.telefone ?? "",
+      }));
+    }
+  }, [formData.ambienteSelecionado, ambientes]);
+
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
+  function handleChecklistChange(
+    index: number,
+    field: keyof ChecklistItem,
+    value: string
+  ) {
+    const updated = [...checklist];
+    updated[index][field] = value;
+    setChecklist(updated);
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    try {
+      await axios.post("/api/salvar-pmoc", {
+        ...formData,
+        checklist,
+      });
+      alert("PMOC salvo com sucesso!");
+      router.push("/pmoc-list");
+    } catch (error) {
+      console.error("Erro ao salvar PMOC:", error);
+      alert("Erro ao salvar o PMOC.");
+    }
+  }
+
+  useEffect(() => {
+    const hoje = new Date();
+    const dataFormatada = hoje.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
     });
+    setDataAtual(dataFormatada);
+  }, []);
 
-    useEffect(() => {
-        async function carregarDados() {
-            try {
-                const [resAmbientes, resTags, resServicos] = await Promise.all([
-                    axios.get("/api/ambientes"),
-                    axios.get("/api/tags"),
-                    axios.get("/api/servicos"), // se tiver
-                ]);
-
-                setAmbientes(resAmbientes.data);
-                setTags(resTags.data);
-                setServicos(resServicos.data);
-            } catch (err) {
-                console.error("Erro ao carregar dados iniciais:", err);
-            }
-        }
-
-        carregarDados();
-    }, []);
-
-
-    useEffect(() => {
-        const ambienteSelecionado = ambientes.find(
-            (a) => String(a.id) === formData.ambienteSelecionado
-        );
-        if (ambienteSelecionado) {
-            setFormData((prev) => ({
-                ...prev,
-                nomeAmbiente: ambienteSelecionado.nome,
-                endereco: ambienteSelecionado.endereco || "",
-                numero: ambienteSelecionado.numero || "",
-                bairro: ambienteSelecionado.bairro || "",
-                cidade: ambienteSelecionado.cidade || "",
-                uf: ambienteSelecionado.uf || "",
-                telefone: ambienteSelecionado.telefone || "",
-            }));
-        }
-    }, [formData.ambienteSelecionado, ambientes]);
-
-
-    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
-
-    useEffect(() => {
-        if (!formData.ambienteSelecionado || ambientes.length === 0) return;
-
-        const ambiente = ambientes.find(
-            (a) => String(a.id) === String(formData.ambienteSelecionado)
-        );
-
-        if (ambiente) {
-            setFormData((prev) => ({
-                ...prev,
-                nomeAmbiente: ambiente.nome,
-                endereco: ambiente.endereco ?? "",
-                numero: ambiente.numero ?? "",
-                bairro: ambiente.bairro ?? "",
-                cidade: ambiente.cidade ?? "",
-                uf: ambiente.uf ?? "",
-                telefone: ambiente.telefone ?? "",
-            }));
-        }
-    }, [formData.ambienteSelecionado, ambientes]);
-
-
-    function handleChecklistChange(
-        index: number,
-        field: keyof ChecklistItem,
-        value: string
-    ) {
-        const updated = [...checklist];
-        updated[index][field] = value;
-        setChecklist(updated);
-    }
-
-
-    async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
-
-        try {
-            await axios.post("/api/salvar-pmoc", {
-                ...formData,
-                checklist,
-            });
-
-            alert("PMOC salvo com sucesso!");
-            router.push("/pmoc-list");
-        } catch (error) {
-            console.error("Erro ao salvar PMOC:", error);
-            alert("Erro ao salvar o PMOC.");
-        }
-    }
-
-    useEffect(() => {
-        const hoje = new Date();
-        const dataFormatada = hoje.toLocaleDateString("pt-BR", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-        });
-        setDataAtual(dataFormatada);
-    }, []);
-
-    function getTodayISO() {
-        const hoje = new Date();
-        return hoje.toISOString().split("T")[0]; // retorna "2025-06-17"
-    }
+  function getTodayISO() {
+    const hoje = new Date();
+    return hoje.toISOString().split("T")[0];
+  }
 
 
     return (
