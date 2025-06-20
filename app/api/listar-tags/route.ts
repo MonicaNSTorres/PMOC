@@ -1,3 +1,4 @@
+// /api/tags/route.ts
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
@@ -11,7 +12,7 @@ export async function GET() {
 
     return NextResponse.json(tags);
   } catch (error) {
-    console.error("Erro ao listar tags:", error);
-    return NextResponse.json({ erro: "Erro ao buscar tags." }, { status: 500 });
+    console.error("Erro ao listar TAGs:", error);
+    return NextResponse.json({ erro: "Erro ao buscar TAGs." }, { status: 500 });
   }
 }

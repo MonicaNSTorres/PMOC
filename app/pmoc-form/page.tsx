@@ -54,6 +54,27 @@ export default function PMOCForm() {
     });
 
     useEffect(() => {
+        async function carregarDados() {
+            try {
+                const [resAmbientes, resTags, resServicos] = await Promise.all([
+                    axios.get("/api/ambientes"),
+                    axios.get("/api/tags"),
+                    axios.get("/api/servicos"), // se tiver
+                ]);
+
+                setAmbientes(resAmbientes.data);
+                setTags(resTags.data);
+                setServicos(resServicos.data);
+            } catch (err) {
+                console.error("Erro ao carregar dados iniciais:", err);
+            }
+        }
+
+        carregarDados();
+    }, []);
+
+
+    useEffect(() => {
         const ambienteSelecionado = ambientes.find(
             (a) => String(a.id) === formData.ambienteSelecionado
         );
