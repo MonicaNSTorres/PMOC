@@ -54,19 +54,22 @@ export default function PMOCForm() {
     });
 
     useEffect(() => {
-        async function fetchSelects() {
-            const [amb, srv, tg] = await Promise.all([
-                axios.get("/api/ambientes"),
-                axios.get("/api/servicos"),
-                axios.get("/api/tags"),
-            ]);
-            setAmbientes(amb.data);
-            setServicos(srv.data);
-            setTags(tg.data);
+        const ambienteSelecionado = ambientes.find(
+            (a) => String(a.id) === formData.ambienteSelecionado
+        );
+        if (ambienteSelecionado) {
+            setFormData((prev) => ({
+                ...prev,
+                nomeAmbiente: ambienteSelecionado.nome,
+                endereco: ambienteSelecionado.endereco || "",
+                numero: ambienteSelecionado.numero || "",
+                bairro: ambienteSelecionado.bairro || "",
+                cidade: ambienteSelecionado.cidade || "",
+                uf: ambienteSelecionado.uf || "",
+                telefone: ambienteSelecionado.telefone || "",
+            }));
         }
-
-        fetchSelects();
-    }, []);
+    }, [formData.ambienteSelecionado, ambientes]);
 
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
