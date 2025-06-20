@@ -7,6 +7,16 @@ export async function GET() {
   try {
     const ambientes = await prisma.ambiente.findMany({
       orderBy: { nome: "asc" },
+      select: {
+        id: true,
+        nome: true,
+        endereco: true,
+        numero: true,
+        bairro: true,
+        cidade: true,
+        uf: true,
+        telefone: true,
+      },
     });
 
     return NextResponse.json(ambientes);
