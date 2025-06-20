@@ -3,33 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.ambiente.deleteMany();
   await prisma.servico.deleteMany();
-
-  await prisma.ambiente.createMany({
-    data: [
-      { nome: 'SEDE' },
-      { nome: 'CENTRO DE CONVIVÊNCIA' },
-      { nome: 'EUGENIO DE MELO' },
-      { nome: 'SICOOBCRESSEM LESTE' },
-      { nome: 'SUL' },
-      { nome: 'SUL AGÊNCIA' },
-      { nome: 'JARDIM ORIENTE' },
-      { nome: 'CAÇAPAVA' },
-      { nome: 'CAMPOS DO JORDÃO' },
-      { nome: 'CARAGUATATUBA' },
-      { nome: 'CRUZEIRO' },
-      { nome: 'ILHABELA' },
-      { nome: 'JACAREÍ' },
-      { nome: 'JAMBEIRO AGÊNCIA' },
-      { nome: 'PARAIBUNA' },
-      { nome: 'PARAIBUNA AGÊNCIA' },
-      { nome: 'SÃO FRANCISCO XAVIER' },
-      { nome: 'SÃO SEBASTIÃO' },
-      { nome: 'TAUBATÉ' },
-      { nome: 'UBATUBA' }
-    ],
-  });
 
   await prisma.servico.createMany({
     data: [

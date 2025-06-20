@@ -8,7 +8,7 @@ import BackButton from "../components/back-button/back-button";
 interface Ambiente {
   id?: number;
   nome: string;
-  local: string;
+  endereco?: string;
 }
 
 export default function ListaAmbientes() {
@@ -69,7 +69,7 @@ export default function ListaAmbientes() {
           <h1 className="text-2xl font-bold mb-6">Ambientes Cadastrados</h1>
           <button
             onClick={() => {
-              setFormEdit({ nome: "", local: "" });
+              setFormEdit({ nome: "", endereco: "" });
               setShowCreateModal(true);
             }}
             className="bg-green-800 hover:bg-green-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center gap-2"
@@ -82,7 +82,7 @@ export default function ListaAmbientes() {
           <thead className="bg-blue-100 text-left">
             <tr>
               <th className="border p-2">Nome</th>
-              <th className="border p-2">Local</th>
+              <th className="border p-2">Endereço</th>
               <th className="border p-2">Ações</th>
             </tr>
           </thead>
@@ -90,7 +90,7 @@ export default function ListaAmbientes() {
             {ambientes.map((ambiente) => (
               <tr key={ambiente.id} className="border-t">
                 <td className="border p-2">{ambiente.nome}</td>
-                <td className="border p-2">{ambiente.local}</td>
+                <td className="border p-2">{ambiente.endereco}</td>
                 <td className="border p-2 flex gap-2">
                   <button onClick={() => abrirEdicao(ambiente)} className="text-blue-800 hover:text-blue-600 cursor-pointer">
                     <Pencil size={22} />
@@ -128,11 +128,11 @@ export default function ListaAmbientes() {
                 />
                 <input
                   className="border p-2 rounded w-full"
-                  value={formEdit.local || ""}
+                  value={formEdit.endereco || ""}
                   onChange={(e) =>
-                    handleInputChange("local", e.target.value)
+                    handleInputChange("endereco", e.target.value)
                   }
-                  placeholder="Local do ambiente"
+                  placeholder="Endereço do ambiente"
                 />
                 <div className="flex justify-end gap-2">
                   <button
