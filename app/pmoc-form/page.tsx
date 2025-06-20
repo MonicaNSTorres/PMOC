@@ -29,7 +29,7 @@ export default function PMOCForm() {
             periodicidade: "Mensal",
             data: getTodayISO(),
             executadoPor: "",
-            aprovadoPor: "Luiz Carlos Pellegrini Junior",
+            aprovadoPor: "",
         }))
     );
 
@@ -77,16 +77,22 @@ export default function PMOCForm() {
     }
 
     useEffect(() => {
-        const ambiente = ambientes.find((a) => a.id.toString() === formData.ambienteSelecionado);
+        if (!formData.ambienteSelecionado || ambientes.length === 0) return;
+
+        const ambiente = ambientes.find(
+            (a) => String(a.id) === String(formData.ambienteSelecionado)
+        );
+
         if (ambiente) {
             setFormData((prev) => ({
                 ...prev,
-                endereco: ambiente.endereco || "",
-                numero: ambiente.numero || "",
-                bairro: ambiente.bairro || "",
-                cidade: ambiente.cidade || "",
-                uf: ambiente.uf || "",
-                telefone: ambiente.telefone || "",
+                nomeAmbiente: ambiente.nome,
+                endereco: ambiente.endereco ?? "",
+                numero: ambiente.numero ?? "",
+                bairro: ambiente.bairro ?? "",
+                cidade: ambiente.cidade ?? "",
+                uf: ambiente.uf ?? "",
+                telefone: ambiente.telefone ?? "",
             }));
         }
     }, [formData.ambienteSelecionado, ambientes]);
