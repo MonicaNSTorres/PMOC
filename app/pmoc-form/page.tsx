@@ -70,9 +70,9 @@ export default function PMOCForm() {
     async function carregarDados() {
       try {
         const [resAmbientes, resTags, resServicos] = await Promise.all([
-          axios.get("/api/ambientes"),
-          axios.get("/api/tags"),
-          axios.get("/api/servicos"),
+          axios.get("/api/listar-ambientes"),
+          axios.get("/api/listar-tags"),
+          axios.get("/api/listar-servicos"),
         ]);
 
         setAmbientes(resAmbientes.data);
@@ -87,26 +87,27 @@ export default function PMOCForm() {
   }, []);
 
   // Preenche os campos ao selecionar um ambiente
-  useEffect(() => {
-    if (!formData.ambienteSelecionado || ambientes.length === 0) return;
+useEffect(() => {
+  if (!formData.ambienteSelecionado || ambientes.length === 0) return;
 
-    const ambiente = ambientes.find(
-      (a) => String(a.id) === String(formData.ambienteSelecionado)
-    );
+  const ambiente = ambientes.find(
+    (a) => String(a.id) === formData.ambienteSelecionado // importante usar String aqui
+  );
 
-    if (ambiente) {
-      setFormData((prev) => ({
-        ...prev,
-        nomeAmbiente: ambiente.nome,
-        endereco: ambiente.endereco ?? "",
-        numero: ambiente.numero ?? "",
-        bairro: ambiente.bairro ?? "",
-        cidade: ambiente.cidade ?? "",
-        uf: ambiente.uf ?? "",
-        telefone: ambiente.telefone ?? "",
-      }));
-    }
-  }, [formData.ambienteSelecionado, ambientes]);
+  if (ambiente) {
+    setFormData((prev) => ({
+      ...prev,
+      nomeAmbiente: ambiente.nome,
+      endereco: ambiente.endereco || "",
+      numero: ambiente.numero || "",
+      bairro: ambiente.bairro || "",
+      cidade: ambiente.cidade || "",
+      uf: ambiente.uf || "",
+      telefone: ambiente.telefone || "",
+    }));
+  }
+}, [formData.ambienteSelecionado, ambientes]);
+
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
