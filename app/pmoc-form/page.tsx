@@ -15,7 +15,10 @@ type ChecklistItem = {
 
 
 export default function PMOCForm() {
-    const [ambientes, setAmbientes] = useState<{ id: number; nome: string }[]>([]);
+    const [ambientes, setAmbientes] = useState<
+        { id: number; nome: string; endereco: string; numero: string; bairro: string; cidade: string; uf: string; telefone: string }[]
+    >([]);
+
     const [servicos, setServicos] = useState<{ id: number; nome: string }[]>([]);
     const [tags, setTags] = useState<{ id: number; tag: string; unidade: string; local: string }[]>([]);
     const router = useRouter();
@@ -69,6 +72,22 @@ export default function PMOCForm() {
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
+
+    useEffect(() => {
+        const ambiente = ambientes.find((a) => a.id.toString() === formData.ambienteSelecionado);
+        if (ambiente) {
+            setFormData((prev) => ({
+                ...prev,
+                endereco: ambiente.endereco || "",
+                numero: ambiente.numero || "",
+                bairro: ambiente.bairro || "",
+                cidade: ambiente.cidade || "",
+                uf: ambiente.uf || "",
+                telefone: ambiente.telefone || "",
+            }));
+        }
+    }, [formData.ambienteSelecionado, ambientes]);
+
 
     function handleChecklistChange(
         index: number,
