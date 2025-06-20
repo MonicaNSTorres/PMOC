@@ -23,7 +23,7 @@ export default function PMOCForm() {
       bairro: string;
       cidade: string;
       uf: string;
-      telefone: string;
+      //telefone: string;
     }[]
   >([]);
 
@@ -52,7 +52,7 @@ export default function PMOCForm() {
     bairro: "",
     cidade: "",
     uf: "",
-    telefone: "",
+    //telefone: "",
     nomeProprietario: "",
     cgcProprietario: "",
     enderecoProprietario: "",
@@ -103,7 +103,7 @@ useEffect(() => {
       bairro: ambiente.bairro || "",
       cidade: ambiente.cidade || "",
       uf: ambiente.uf || "",
-      telefone: ambiente.telefone || "",
+      //telefone: ambiente.telefone || "",
     }));
   }
 }, [formData.ambienteSelecionado, ambientes]);
@@ -201,7 +201,7 @@ useEffect(() => {
                                 ))}
                             </select>
 
-                            {["endereco", "numero", "bairro", "cidade", "uf", "telefone"].map((field) => (
+                            {["endereco", "numero", "bairro", "cidade", "uf"].map((field) => (
                                 <input
                                     key={field}
                                     name={field}
