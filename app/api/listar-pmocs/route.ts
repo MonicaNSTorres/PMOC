@@ -25,9 +25,8 @@ export async function GET(req: NextRequest) {
   const pmocs = await prisma.pMOC.findMany({
     where,
     include: {
-      checklist: true,
-      tag: true,
-      ambiente: true,
+      tag: true,        // ✅ traz { tag, unidade }
+      ambiente: true,   // ✅ traz { nome }
     },
     orderBy: { criadoEm: "desc" },
   });

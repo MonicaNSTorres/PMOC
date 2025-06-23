@@ -27,13 +27,14 @@ model Tag {
   nome String? // com interrogação
   unidade   String
   local     String
-  tag       String   @unique
+  tag       String
 
   ambienteId   Int?
   ambiente     Ambiente?     @relation("AmbienteTags", fields: [ambienteId], references: [id])
   equipamentos Equipamento[] @relation("TagEquipamentos")
   pmocs        PMOC[]        @relation("TagPMOC")
 }
+
 
 model Equipamento {
   id           Int    @id @default(autoincrement())
