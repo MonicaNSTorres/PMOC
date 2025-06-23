@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
           art: "2620250917094",
           criadoEm: new Date(),
           tagId: tag.id,
-          ambienteId: ambiente.id,
+          ambienteId: ambiente.id!,
         },
       });
 
