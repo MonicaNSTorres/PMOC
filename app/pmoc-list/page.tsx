@@ -85,10 +85,21 @@ export default function ListaPMOC() {
   }
 
   async function handleGerarPMOCs() {
-    if (!unidadeSelecionada) return;
-    await axios.post("/api/pmoc/gerar-multiplo", { unidade: unidadeSelecionada });
+  if (!unidadeSelecionada) return;
+
+  try {
+    const response = await axios.post("/api/pmoc/gerar-multiplo", {
+      unidade: unidadeSelecionada,
+    });
+
+    alert("PMOCs gerados com sucesso!");
     fetchPmocs();
+  } catch (error: any) {
+    console.error("Erro ao gerar PMOCs:", error);
+    alert("Erro ao gerar PMOCs: " + (error?.response?.data?.error || "Erro desconhecido"));
   }
+}
+
 
   return (
     <div className="flex flex-col pl-[9%] pr-[10%] min-h-screen bg-gray-200 p-4">

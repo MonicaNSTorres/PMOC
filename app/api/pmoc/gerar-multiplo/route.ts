@@ -13,13 +13,17 @@ export async function POST(req: NextRequest) {
 
     const ambientes = await prisma.ambiente.findMany();
 
+    let totalCriados = 0;
+
     for (const ambiente of ambientes) {
       const tags = await prisma.tag.findMany({
         where: {
-          unidade,
+          unidade: unidade.trim(),
           ambienteId: ambiente.id,
         },
       });
+
+      if (tags.length === 0) continue;
 
       for (const tag of tags) {
         await prisma.pMOC.create({
@@ -43,10 +47,16 @@ export async function POST(req: NextRequest) {
             ambienteId: ambiente.id,
           },
         });
+        totalCriados++;
       }
     }
 
-    return NextResponse.json({ message: "✅ PMOCs gerados com sucesso!" });
+    return NextResponse.json({
+      message:
+        totalCriados > 0
+          ? `✅ ${totalCriados} PMOCs gerados para a unidade "${unidade}".`
+          : `⚠️ Nenhum PMOC foi gerado para a unidade "${unidade}".`,
+    });
   } catch (error) {
     console.error("❌ Erro ao gerar PMOCs:", error);
     return NextResponse.json({ error: "Erro interno ao gerar PMOCs." }, { status: 500 });
