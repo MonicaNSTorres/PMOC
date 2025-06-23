@@ -14,16 +14,18 @@ async function main() {
   for (const tag of tags) {
     const textoCorrigido = corrigirTexto(tag.nome || "");
     const unidadeCorrigida = corrigirTexto(tag.unidade || "");
+    const localCorrigida = corrigirTexto(tag.local || "");
 
     await prisma.tag.update({
       where: { id: tag.id },
       data: {
         nome: textoCorrigido,
         unidade: unidadeCorrigida,
+        local: localCorrigida,
       },
     });
 
-    console.log(`Corrigido: ${textoCorrigido} - ${unidadeCorrigida}`);
+    console.log(`Corrigido: ${textoCorrigido} - ${unidadeCorrigida} - ${localCorrigida}`);
   }
 
   console.log("✅ Correções finalizadas.");

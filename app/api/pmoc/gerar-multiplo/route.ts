@@ -11,27 +11,33 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unidade não informada." }, { status: 400 });
     }
 
+    // Busca ambiente com correspondência insensível a maiúsculas/minúsculas
+    const ambiente = await prisma.ambiente.findFirst({
+      where: {
+        nome: {
+          equals: unidade.trim(),
+          mode: "insensitive",
+        },
+      },
+    });
+
+    if (!ambiente) {
+      return NextResponse.json({ error: `Ambiente "${unidade}" não encontrado.` }, { status: 404 });
+    }
+
     const tags = await prisma.tag.findMany({
-      where: { unidade: unidade.trim() },
+      where: { ambienteId: ambiente.id },
     });
 
     if (tags.length === 0) {
       return NextResponse.json({
-        message: `⚠️ Nenhuma TAG encontrada para a unidade "${unidade}".`,
+        message: `⚠️ Nenhuma TAG encontrada para o ambiente "${unidade}".`,
       });
     }
 
     let totalCriados = 0;
 
     for (const tag of tags) {
-      if (!tag.ambienteId) continue;
-
-      const ambiente = await prisma.ambiente.findUnique({
-        where: { id: tag.ambienteId },
-      });
-
-      if (!ambiente) continue;
-
       await prisma.pMOC.create({
         data: {
           nomeAmbiente: ambiente.nome,
@@ -58,7 +64,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({
-      message: `✅ ${totalCriados} PMOCs gerados para a unidade "${unidade}".`,
+      message: `✅ ${totalCriados} PMOC(s) gerado(s) para a unidade "${unidade}".`,
     });
 
   } catch (error) {
