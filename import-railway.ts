@@ -27,12 +27,13 @@ async function main() {
     for (const tag of data.tags as TagType[]) {
         await prisma.tag.create({
             data: {
-                tag: nomeTag,
-                unidade: unidadeTag,
-                local: localTag,
-                ambienteId: ambienteId,
+                tag: tag.tag,
+                unidade: tag.unidade,
+                local: tag.local,
+                ambienteId: ambiente.id, // ou a variável correta que você obteve antes
             },
         });
+
 
     }
 
