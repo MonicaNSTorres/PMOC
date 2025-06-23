@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+/*import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import path from "path";
 import { parse } from "csv-parse/sync";
@@ -104,3 +104,4 @@ const prisma = new PrismaClient();
 importarAmbientes()
   .catch(console.error)
   .finally(() => prisma.$disconnect());
+*/

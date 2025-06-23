@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+/*import { PrismaClient } from "@prisma/client";
 import data from "./backup.json";
 
 const prisma = new PrismaClient();
@@ -56,3 +56,4 @@ main()
     .finally(() => {
         prisma.$disconnect();
     });
+*/

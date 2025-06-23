@@ -43,13 +43,12 @@ export async function POST(req: NextRequest) {
             ambienteId: ambiente.id,
           },
         });
-
       }
     }
 
-    return NextResponse.json({ message: "PMOCs gerados com sucesso!" });
+    return NextResponse.json({ message: "✅ PMOCs gerados com sucesso!" });
   } catch (error) {
-    console.error("Erro ao gerar PMOCs:", error);
+    console.error("❌ Erro ao gerar PMOCs:", error);
     return NextResponse.json({ error: "Erro interno ao gerar PMOCs." }, { status: 500 });
   }
 }
