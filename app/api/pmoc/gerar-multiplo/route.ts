@@ -25,9 +25,9 @@ export async function POST(req: Request) {
       tags.map(async (tag) => {
         if (!tag.ambiente) return null;
 
-        return prisma.pMOC.create({
+        return prisma.tag.create({
           data: {
-            nomeAmbiente: tag.ambiente.nome,
+            nome: tag.ambiente.nome,
             endereco: tag.ambiente.endereco,
             numero: tag.ambiente.numero,
             bairro: tag.ambiente.bairro,
