@@ -91,10 +91,8 @@ export default function ListaPMOC() {
 
     try {
       await axios.post("/api/pmoc/gerar-multiplo", {
-        nomeAmbiente: ambienteSelecionado,
+        unidade: ambienteSelecionado,
       });
-
-
 
       alert("PMOCs gerados com sucesso!");
       fetchPmocs();
@@ -103,6 +101,7 @@ export default function ListaPMOC() {
       alert("Erro ao gerar PMOCs: " + (error?.response?.data?.error || "Erro desconhecido"));
     }
   }
+
 
 
   return (
@@ -151,11 +150,12 @@ export default function ListaPMOC() {
                 onChange={(e) => setAmbienteSelecionado(e.target.value)}
                 className="border px-3 py-2 text-sm rounded"
               >
-                <option value="">Selecione o Ambiente</option>
+                <option value="">Selecione a Unidade</option>
                 {unidades.map((u) => (
                   <option key={u.nome} value={u.nome}>{u.nome}</option>
                 ))}
               </select>
+
             </div>
             <div className="pt-6">
               <button
