@@ -4,43 +4,43 @@ import data from "./backup.json";
 const prisma = new PrismaClient();
 
 interface TagType {
-    tag: string;
-    unidade: string;
-    local: string;
+  tag: string;
+  unidade: string;
+  local: string;
 }
 
 interface AmbienteType {
-    nome: string;
+  nome: string;
 }
 
 async function main() {
-    // Importar Ambientes (usando upsert porque nome é único)
-    for (const ambiente of data.ambientes as AmbienteType[]) {
-        await prisma.ambiente.upsert({
-            where: { nome: ambiente.nome },
-            update: {},
-            create: { nome: ambiente.nome },
-        });
-    }
+  // Importar Ambientes
+  for (const ambiente of data.ambientes as AmbienteType[]) {
+    await prisma.ambiente.upsert({
+      where: { nome: ambiente.nome },
+      update: {},
+      create: { nome: ambiente.nome },
+    });
+  }
 
-    // Importar Tags (permitindo duplicadas)
-    for (const tag of data.tags as TagType[]) {
-        await prisma.tag.create({
-            data: {
-                tag: tag.tag,
-                unidade: tag.unidade,
-                local: tag.local,
-            },
-        });
-    }
+  // Importar Tags (permitindo duplicadas)
+  for (const tag of data.tags as TagType[]) {
+    await prisma.tag.create({
+      data: {
+        tag: tag.tag,
+        unidade: tag.unidade,
+        local: tag.local,
+      },
+    });
+  }
 
-    console.log("✅ Dados importados com sucesso para o Railway");
+  console.log("✅ Dados importados com sucesso para o Railway");
 }
 
 main()
-    .catch((e) => {
-        console.error("❌ Erro ao importar dados:", e);
-    })
-    .finally(() => {
-        prisma.$disconnect();
-    });
+  .catch((e) => {
+    console.error("❌ Erro ao importar dados:", e);
+  })
+  .finally(() => {
+    prisma.$disconnect();
+  });
