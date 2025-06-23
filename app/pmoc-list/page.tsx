@@ -129,7 +129,7 @@ export default function ListaPMOC() {
           <div className="flex flex-wrap items-end gap-4">
             <div>
               <label className="block text-sm text-gray-700 mb-1 font-semibold">
-                Gerar PMOCs para a Unidade
+                Gerar TAG por unidade
               </label>
               <select
                 value={unidadeSelecionada}
