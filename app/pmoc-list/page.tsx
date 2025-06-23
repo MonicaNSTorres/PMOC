@@ -38,8 +38,8 @@ export default function ListaPMOC() {
   const [formEdit, setFormEdit] = useState<Partial<PMOC>>({});
   const [dataInicio, setDataInicio] = useState("");
   const [dataFim, setDataFim] = useState("");
-  const [unidades, setUnidades] = useState<{ id: number; nome: string }[]>([]);
   const [unidadeSelecionada, setUnidadeSelecionada] = useState("");
+  const [unidades, setUnidades] = useState<{ unidade: string }[]>([]);
 
   useEffect(() => {
     fetchPmocs();
@@ -86,7 +86,7 @@ export default function ListaPMOC() {
 
   async function handleGerarPMOCs() {
     if (!unidadeSelecionada) return;
-    await axios.post("/api/pmoc/gerar-multiplo", { unidadeId: unidadeSelecionada });
+    await axios.post("/api/pmoc/gerar-multiplo", { unidade: unidadeSelecionada });
     fetchPmocs();
   }
 
@@ -128,9 +128,11 @@ export default function ListaPMOC() {
           >
             <option value="">Selecione a Unidade</option>
             {unidades.map((u) => (
-              <option key={u.id} value={u.id}>{u.nome}</option>
+              <option key={u.unidade} value={u.unidade}>{u.unidade}</option>
             ))}
+
           </select>
+
           <button
             onClick={handleGerarPMOCs}
             disabled={!unidadeSelecionada}

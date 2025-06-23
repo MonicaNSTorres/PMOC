@@ -11,7 +11,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unidade não fornecida." }, { status: 400 });
     }
 
-    //busca todas as tags da unidade selecionada (com seus ambientes relacionados)
+    // Busca todas as TAGs da unidade com seus ambientes relacionados
     const tags = await prisma.tag.findMany({
       where: { unidade },
       include: { ambiente: true },
@@ -23,17 +23,18 @@ export async function POST(req: Request) {
 
     const novosPmocs = await Promise.all(
       tags.map(async (tag) => {
-        if (!tag.ambiente) return null;
+        const ambiente = tag.ambiente;
+        if (!ambiente) return null;
 
         return prisma.pMOC.create({
           data: {
-            nomeAmbiente: tag.ambiente.nome ?? "",
-            endereco: tag.ambiente.endereco ?? "",
-            numero: tag.ambiente.numero ?? "",
-            bairro: tag.ambiente.bairro ?? "",
-            cidade: tag.ambiente.cidade ?? "",
-            uf: tag.ambiente.uf ?? "",
-            telefone: tag.ambiente.telefone ?? "",
+            nomeAmbiente: ambiente.nome,
+            endereco: ambiente.endereco ?? "",
+            numero: ambiente.numero ?? "",
+            bairro: ambiente.bairro ?? "",
+            cidade: ambiente.cidade ?? "",
+            uf: ambiente.uf ?? "",
+            telefone: ambiente.telefone ?? "",
             nomeProprietario: "",
             cgcProprietario: "",
             enderecoProprietario: "",
@@ -41,16 +42,14 @@ export async function POST(req: Request) {
             cgcResponsavel: "0682189924",
             conselho: "Engenheiro Industrial - Mecânica - RNP 2602139106",
             art: "2620250917094",
-            ambienteId: tag.ambiente.id,
+            ambienteId: ambiente.id,
             tagId: tag.id,
-            checklist: { create: [] },
           },
         });
-
       })
     );
 
-    const filtrados = novosPmocs.filter(Boolean); // remove nulls (caso alguma tag esteja sem ambiente)
+    const filtrados = novosPmocs.filter((pmoc): pmoc is NonNullable<typeof pmoc> => !!pmoc);
 
     return NextResponse.json({ count: filtrados.length, pmocs: filtrados });
   } catch (error) {
