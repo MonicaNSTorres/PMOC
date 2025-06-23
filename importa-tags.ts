@@ -1,41 +1,45 @@
-import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import path from "path";
 import csv from "csv-parser";
 
 const prisma = new PrismaClient();
+const filePath = path.join(__dirname, "public", "TAGS.csv");
 
-export async function POST() {
-  const filePath = path.join(process.cwd(), "public", "TAGS.csv");
-  const results: any[] = [];
+const results: any[] = [];
 
-  return new Promise((resolve, reject) => {
-    fs.createReadStream(filePath)
-      .pipe(csv({ separator: "," })) // Mude para ";" se for separado por ponto e vírgula
-      .on("data", (data) => results.push(data))
-      .on("end", async () => {
-        try {
-          // 🧹 Apaga todas as tags antes de importar
-          await prisma.tag.deleteMany();
+fs.createReadStream(filePath)
+  .pipe(csv({ separator: "," }))
+  .on("data", (data) => results.push(data))
+  .on("end", async () => {
+    try {
+      console.log("🗑️ Apagando equipamentos...");
+      await prisma.equipamento.deleteMany();
 
-          // 🚀 Importa todas as novas tags do CSV
-          for (const linha of results) {
-            await prisma.tag.create({
-              data: {
-                nome: linha.NOME.trim(),
-                unidade: linha.UNIDADE.trim(),
-                local: linha.LOCAL.trim(),
-                tag: linha.TAG.trim(),
-              },
-            });
-          }
+      console.log("🗑️ Apagando tags...");
+      await prisma.tag.deleteMany();
 
-          resolve(NextResponse.json({ success: true, inseridos: results.length }));
-        } catch (error) {
-          console.error("Erro ao importar TAGs:", error);
-          reject(NextResponse.json({ error: "Erro ao importar TAGs." }, { status: 500 }));
+      console.log("⬆️ Importando novas tags...");
+      for (const linha of results) {
+        const nome = linha.NOME?.trim() || "";
+        const unidade = linha.UNIDADE?.trim() || "";
+        const local = linha.LOCAL?.trim() || "";
+        const tag = linha.TAG?.trim() || "";
+
+        if (!nome || !unidade || !local || !tag) {
+          console.warn("⚠️ Linha ignorada por dados incompletos:", linha);
+          continue;
         }
-      });
+
+        await prisma.tag.create({
+          data: { nome, unidade, local, tag },
+        });
+      }
+
+      console.log(`✅ Importação concluída. Registros inseridos: ${results.length}`);
+      process.exit(0);
+    } catch (error) {
+      console.error("❌ Erro ao importar TAGs:", error);
+      process.exit(1);
+    }
   });
-}

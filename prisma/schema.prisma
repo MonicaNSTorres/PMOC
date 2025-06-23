@@ -25,9 +25,9 @@ model Ambiente {
 model Tag {
   id           Int           @id @default(autoincrement())
   nome String? // com interrogação
-  unidade      String
-  local        String
-  tag          String        @unique
+  unidade   String
+  local     String
+  tag       String   @unique
 
   ambienteId   Int?
   ambiente     Ambiente?     @relation("AmbienteTags", fields: [ambienteId], references: [id])
