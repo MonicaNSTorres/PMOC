@@ -11,15 +11,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unidade não informada." }, { status: 400 });
     }
 
+    const ambiente = await prisma.ambiente.findFirst({
+      where: { nome: unidade.trim() },
+    });
+
+    if (!ambiente) {
+      return NextResponse.json({ error: "Ambiente não encontrado." }, { status: 404 });
+    }
+
     const tags = await prisma.tag.findMany({
-      where: { unidade: unidade.trim() },
+      where: { ambienteId: ambiente.id },
     });
 
     if (tags.length === 0) {
       return NextResponse.json({
-        message: `⚠️ Nenhuma TAG encontrada para a unidade "${unidade}".`,
+        message: `⚠️ Nenhuma TAG encontrada para o ambiente "${unidade}".`,
       });
     }
+
 
     let totalCriados = 0;
 
