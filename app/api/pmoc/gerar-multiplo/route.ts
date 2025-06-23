@@ -25,12 +25,25 @@ export async function POST(req: NextRequest) {
         await prisma.pMOC.create({
           data: {
             nomeAmbiente: ambiente.nome,
+            endereco: "",
+            numero: "",
+            bairro: "",
             cidade: "São José dos Campos",
+            uf: "",
+            telefone: "",
+            nomeProprietario: "",
+            cgcProprietario: "",
+            enderecoProprietario: "",
+            nomeResponsavel: "",
+            cgcResponsavel: "",
+            conselho: "",
+            art: "",
             criadoEm: new Date(),
             tagId: tag.id,
             ambienteId: ambiente.id,
           },
         });
+
       }
     }
 
