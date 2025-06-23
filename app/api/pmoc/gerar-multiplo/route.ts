@@ -11,16 +11,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unidade não informada." }, { status: 400 });
     }
 
-    const ambiente = await prisma.ambiente.findFirst({
-      where: { nome: unidade.trim() },
-    });
-
-    if (!ambiente) {
-      return NextResponse.json({ error: "Ambiente não encontrado para essa unidade." }, { status: 404 });
-    }
-
     const tags = await prisma.tag.findMany({
-      where: { ambienteId: ambiente.id },
+      where: { unidade: unidade.trim() },
     });
 
     if (tags.length === 0) {
@@ -30,6 +22,12 @@ export async function POST(req: NextRequest) {
     let totalCriados = 0;
 
     for (const tag of tags) {
+      const ambiente = await prisma.ambiente.findUnique({
+        where: { id: tag.ambienteId },
+      });
+
+      if (!ambiente) continue;
+
       await prisma.pMOC.create({
         data: {
           nomeAmbiente: ambiente.nome,
@@ -51,6 +49,7 @@ export async function POST(req: NextRequest) {
           ambienteId: ambiente.id,
         },
       });
+
       totalCriados++;
     }
 
