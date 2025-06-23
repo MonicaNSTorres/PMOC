@@ -8,6 +8,7 @@ import BackButton from "../components/back-button/back-button";
 interface Tag {
   id?: number;
   tag: string;
+  nome: string;
   unidade: string;
   local: string;
 }
@@ -69,7 +70,7 @@ export default function ListaTags() {
           <h1 className="text-2xl font-bold mb-6">Tags Cadastradas</h1>
           <button
             onClick={() => {
-              setFormEdit({ tag: "", unidade: "", local: "" });
+              setFormEdit({ tag: "", nome: "", unidade: "", local: "" });
               setShowCreateModal(true);
             }}
             className="bg-green-800 hover:bg-green-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center gap-2"
@@ -82,6 +83,7 @@ export default function ListaTags() {
           <thead className="bg-blue-100 text-left">
             <tr>
               <th className="border p-2">Código</th>
+              <th className="border p-2">Nome</th>
               <th className="border p-2">Unidade</th>
               <th className="border p-2">Local</th>
               <th className="border p-2">Ações</th>
@@ -91,6 +93,7 @@ export default function ListaTags() {
             {tags.map((tag) => (
               <tr key={tag.id} className="border-t">
                 <td className="border p-2">{tag.tag}</td>
+                <td className="border p-2">{tag.nome}</td>
                 <td className="border p-2">{tag.unidade}</td>
                 <td className="border p-2">{tag.local}</td>
                 <td className="border p-2 flex gap-2">
@@ -128,6 +131,12 @@ export default function ListaTags() {
                 />
                 <input
                   className="border p-2 rounded w-full"
+                  value={formEdit.nome || ""}
+                  onChange={(e) => handleInputChange("nome", e.target.value)}
+                  placeholder="Nome"
+                />
+                <input
+                  className="border p-2 rounded w-full"
                   value={formEdit.unidade || ""}
                   onChange={(e) => handleInputChange("unidade", e.target.value)}
                   placeholder="Unidade"
@@ -141,16 +150,15 @@ export default function ListaTags() {
                 <div className="flex justify-end gap-2">
                   <button
                     type="button"
-                    onClick={() => {
-                      setEditingId(null);
-                      setShowCreateModal(false);
-                    }}
-                    className="border px-4 py-2 rounded hover:cursor-pointer">
+                    onClick={closeModal}
+                    className="border px-4 py-2 rounded hover:cursor-pointer"
+                  >
                     Cancelar
                   </button>
                   <button
                     type="submit"
-                    className="bg-blue-800 text-white px-4 py-2 rounded hover:cursor-pointer hover:bg-blue-600">
+                    className="bg-blue-800 text-white px-4 py-2 rounded hover:cursor-pointer hover:bg-blue-600"
+                  >
                     Salvar
                   </button>
                 </div>
