@@ -23,17 +23,14 @@ interface PMOC {
   conselho: string;
   art: string;
   criadoEm: string;
-
   tag?: {
     tag: string;
     unidade: string;
   };
-
   ambiente?: {
     nome: string;
   };
 }
-
 
 export default function ListaPMOC() {
   const [pmocs, setPmocs] = useState<PMOC[]>([]);
@@ -41,10 +38,18 @@ export default function ListaPMOC() {
   const [formEdit, setFormEdit] = useState<Partial<PMOC>>({});
   const [dataInicio, setDataInicio] = useState("");
   const [dataFim, setDataFim] = useState("");
+  const [unidades, setUnidades] = useState<{ id: number; nome: string }[]>([]);
+  const [unidadeSelecionada, setUnidadeSelecionada] = useState("");
 
   useEffect(() => {
     fetchPmocs();
+    fetchUnidades();
   }, []);
+
+  async function fetchUnidades() {
+    const response = await axios.get("/api/unidades");
+    setUnidades(response.data);
+  }
 
   async function fetchPmocs() {
     const params: any = {};
@@ -79,6 +84,12 @@ export default function ListaPMOC() {
     setFormEdit((prev) => ({ ...prev, [field]: value }));
   }
 
+  async function handleGerarPMOCs() {
+    if (!unidadeSelecionada) return;
+    await axios.post("/api/pmoc/gerar-multiplo", { unidadeId: unidadeSelecionada });
+    fetchPmocs();
+  }
+
   return (
     <div className="flex flex-col pl-[9%] pr-[10%] min-h-screen bg-gray-200 p-4">
       <div className="max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
@@ -106,8 +117,26 @@ export default function ListaPMOC() {
           </div>
           <button
             onClick={fetchPmocs}
-            className="bg-blue-800 hover:bg-blue-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center">
+            className="bg-blue-800 hover:bg-blue-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center"
+          >
             Filtrar
+          </button>
+          <select
+            value={unidadeSelecionada}
+            onChange={(e) => setUnidadeSelecionada(e.target.value)}
+            className="border px-3 py-2 text-sm rounded"
+          >
+            <option value="">Selecione a Unidade</option>
+            {unidades.map((u) => (
+              <option key={u.id} value={u.id}>{u.nome}</option>
+            ))}
+          </select>
+          <button
+            onClick={handleGerarPMOCs}
+            disabled={!unidadeSelecionada}
+            className="bg-green-700 hover:bg-green-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center"
+          >
+            Gerar
           </button>
         </div>
 
@@ -123,7 +152,6 @@ export default function ListaPMOC() {
                 <th className="border p-2">Ações</th>
               </tr>
             </thead>
-
             <tbody>
               {pmocs.map((pmoc) => (
                 <tr key={pmoc.id} className="border-t">
@@ -149,7 +177,6 @@ export default function ListaPMOC() {
                 </tr>
               ))}
             </tbody>
-
           </table>
         </div>
 
