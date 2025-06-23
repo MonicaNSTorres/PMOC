@@ -11,7 +11,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unidade não fornecida." }, { status: 400 });
     }
 
-    // Busca todas as TAGs da unidade com seus ambientes relacionados
     const tags = await prisma.tag.findMany({
       where: { unidade },
       include: { ambiente: true },
@@ -19,6 +18,11 @@ export async function POST(req: Request) {
 
     if (tags.length === 0) {
       return NextResponse.json({ error: "Nenhuma TAG encontrada para essa unidade." }, { status: 404 });
+    }
+
+    const servicos = await prisma.servico.findMany({ take: 10 }); // pega até 10 serviços
+    if (servicos.length === 0) {
+      return NextResponse.json({ error: "Nenhum serviço cadastrado no sistema." }, { status: 404 });
     }
 
     const novosPmocs = await Promise.all(
@@ -44,7 +48,14 @@ export async function POST(req: Request) {
             art: "2620250917094",
             ambienteId: ambiente.id,
             tagId: tag.id,
+            checklist: {
+              create: servicos.map((srv) => ({
+                descricao: srv.nome,
+                periodicidade: "Mensal", // ou outro valor padrão
+              })),
+            },
           },
+          include: { checklist: true }, // opcional, só se quiser retornar o checklist junto
         });
       })
     );
