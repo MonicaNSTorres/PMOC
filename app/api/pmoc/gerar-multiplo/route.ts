@@ -11,7 +11,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unidade não informada." }, { status: 400 });
     }
 
-    // Buscar todas as TAGs com o nome da unidade fornecido
     const tags = await prisma.tag.findMany({
       where: { unidade: unidade.trim() },
     });
@@ -27,14 +26,12 @@ export async function POST(req: NextRequest) {
     for (const tag of tags) {
       if (!tag.ambienteId) continue;
 
-      // Buscar o ambiente relacionado a cada TAG
       const ambiente = await prisma.ambiente.findUnique({
         where: { id: tag.ambienteId },
       });
 
       if (!ambiente) continue;
 
-      // Criar o PMOC para a TAG atual
       await prisma.pMOC.create({
         data: {
           nomeAmbiente: ambiente.nome,
@@ -61,7 +58,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({
-      message: `✅ ${totalCriados} PMOC(s) gerado(s) para a unidade "${unidade}".`,
+      message: `✅ ${totalCriados} PMOCs gerados para a unidade "${unidade}".`,
     });
 
   } catch (error) {
