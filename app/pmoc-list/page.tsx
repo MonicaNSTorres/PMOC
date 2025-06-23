@@ -40,7 +40,7 @@ export default function ListaPMOC() {
   const [dataFim, setDataFim] = useState("");
   //const [unidadeSelecionada, setUnidadeSelecionada] = useState("");
   const [ambienteSelecionado, setAmbienteSelecionado] = useState("");
-  const [unidades, setUnidades] = useState<{ unidade: string }[]>([]);
+  const [unidades, setUnidades] = useState<{ nome: string }[]>([]);
 
 
   useEffect(() => {
