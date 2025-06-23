@@ -16,12 +16,16 @@ export async function POST(req: NextRequest) {
     });
 
     if (tags.length === 0) {
-      return NextResponse.json({ message: `⚠️ Nenhuma TAG encontrada para a unidade "${unidade}".` });
+      return NextResponse.json({
+        message: `⚠️ Nenhuma TAG encontrada para a unidade "${unidade}".`,
+      });
     }
 
     let totalCriados = 0;
 
     for (const tag of tags) {
+      if (tag.ambienteId === null) continue;
+
       const ambiente = await prisma.ambiente.findUnique({
         where: { id: tag.ambienteId },
       });
@@ -46,7 +50,7 @@ export async function POST(req: NextRequest) {
           art: "2620250917094",
           criadoEm: new Date(),
           tagId: tag.id,
-          ambienteId: ambiente.id!,
+          ambienteId: ambiente.id,
         },
       });
 
@@ -59,6 +63,9 @@ export async function POST(req: NextRequest) {
 
   } catch (error) {
     console.error("❌ Erro ao gerar PMOCs:", error);
-    return NextResponse.json({ error: "Erro interno ao gerar PMOCs." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Erro interno ao gerar PMOCs." },
+      { status: 500 }
+    );
   }
 }
