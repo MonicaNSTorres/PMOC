@@ -38,9 +38,10 @@ export default function ListaPMOC() {
   const [formEdit, setFormEdit] = useState<Partial<PMOC>>({});
   const [dataInicio, setDataInicio] = useState("");
   const [dataFim, setDataFim] = useState("");
-  const [unidadeSelecionada, setUnidadeSelecionada] = useState("");
+  //const [unidadeSelecionada, setUnidadeSelecionada] = useState("");
+  const [ambienteSelecionado, setAmbienteSelecionado] = useState("");
   const [unidades, setUnidades] = useState<{ unidade: string }[]>([]);
-  
+
 
   useEffect(() => {
     fetchPmocs();
@@ -86,20 +87,21 @@ export default function ListaPMOC() {
   }
 
   async function handleGerarPMOCs() {
-  if (!unidadeSelecionada) return;
+    if (!ambienteSelecionado) return;
 
-  try {
-    const response = await axios.post("/api/pmoc/gerar-multiplo", {
-      unidade: unidadeSelecionada,
-    });
+    try {
+      const response = await axios.post("/api/pmoc/gerar-multiplo", {
+        unidade: ambienteSelecionado,
+      });
 
-    alert("PMOCs gerados com sucesso!");
-    fetchPmocs();
-  } catch (error: any) {
-    console.error("Erro ao gerar PMOCs:", error);
-    alert("Erro ao gerar PMOCs: " + (error?.response?.data?.error || "Erro desconhecido"));
+
+      alert("PMOCs gerados com sucesso!");
+      fetchPmocs();
+    } catch (error: any) {
+      console.error("Erro ao gerar PMOCs:", error);
+      alert("Erro ao gerar PMOCs: " + (error?.response?.data?.error || "Erro desconhecido"));
+    }
   }
-}
 
 
   return (
@@ -144,20 +146,20 @@ export default function ListaPMOC() {
                 Gerar TAG por unidade
               </label>
               <select
-                value={unidadeSelecionada}
-                onChange={(e) => setUnidadeSelecionada(e.target.value)}
+                value={ambienteSelecionado}
+                onChange={(e) => setAmbienteSelecionado(e.target.value)}
                 className="border px-3 py-2 text-sm rounded"
               >
-                <option value="">Selecione a Unidade</option>
+                <option value="">Selecione o Ambiente</option>
                 {unidades.map((u) => (
-                  <option key={u.unidade} value={u.unidade}>{u.unidade}</option>
+                  <option key={u.nome} value={u.nome}>{u.nome}</option>
                 ))}
               </select>
             </div>
             <div className="pt-6">
               <button
                 onClick={handleGerarPMOCs}
-                disabled={!unidadeSelecionada}
+                disabled={!ambienteSelecionado}
                 className="bg-green-700 hover:bg-green-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center"
               >
                 Gerar
