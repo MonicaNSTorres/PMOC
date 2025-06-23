@@ -1,4 +1,4 @@
-/*import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -25,15 +25,15 @@ export async function POST(req: Request) {
       tags.map(async (tag) => {
         if (!tag.ambiente) return null;
 
-        return prisma.tag.create({
+        return prisma.pMOC.create({
           data: {
-            nome: tag.ambiente.nome,
-            endereco: tag.ambiente.endereco,
-            numero: tag.ambiente.numero,
-            bairro: tag.ambiente.bairro,
-            cidade: tag.ambiente.cidade,
-            uf: tag.ambiente.uf,
-            telefone: tag.ambiente.telefone || "",
+            nomeAmbiente: tag.ambiente.nome ?? "",
+            endereco: tag.ambiente.endereco ?? "",
+            numero: tag.ambiente.numero ?? "",
+            bairro: tag.ambiente.bairro ?? "",
+            cidade: tag.ambiente.cidade ?? "",
+            uf: tag.ambiente.uf ?? "",
+            telefone: tag.ambiente.telefone ?? "",
             nomeProprietario: "",
             cgcProprietario: "",
             enderecoProprietario: "",
@@ -43,11 +43,10 @@ export async function POST(req: Request) {
             art: "2620250917094",
             ambienteId: tag.ambiente.id,
             tagId: tag.id,
-            checklist: {
-              create: [], // vazio por padrão
-            },
+            checklist: { create: [] },
           },
         });
+
       })
     );
 
@@ -58,4 +57,4 @@ export async function POST(req: Request) {
     console.error("Erro ao gerar PMOCs múltiplos:", error);
     return NextResponse.json({ error: "Erro interno ao gerar PMOCs." }, { status: 500 });
   }
-}*/
+}
