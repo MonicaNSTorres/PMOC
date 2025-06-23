@@ -90,9 +90,10 @@ export default function ListaPMOC() {
     if (!ambienteSelecionado) return;
 
     try {
-      const response = await axios.post("/api/pmoc/gerar-multiplo", {
-        unidade: ambienteSelecionado,
+      await axios.post("/api/pmoc/gerar-multiplo", {
+        nomeAmbiente: ambienteSelecionado,
       });
+
 
 
       alert("PMOCs gerados com sucesso!");
