@@ -38,8 +38,8 @@ export default function ListaPMOC() {
   const [formEdit, setFormEdit] = useState<Partial<PMOC>>({});
   const [dataInicio, setDataInicio] = useState("");
   const [dataFim, setDataFim] = useState("");
-  const [unidades, setUnidades] = useState<{ id: number; nome: string }[]>([]);
   const [unidadeSelecionada, setUnidadeSelecionada] = useState("");
+  const [unidades, setUnidades] = useState<{ unidade: string }[]>([]);
 
   useEffect(() => {
     fetchPmocs();
@@ -85,10 +85,21 @@ export default function ListaPMOC() {
   }
 
   async function handleGerarPMOCs() {
-    if (!unidadeSelecionada) return;
-    await axios.post("/api/pmoc/gerar-multiplo", { unidadeId: unidadeSelecionada });
+  if (!unidadeSelecionada) return;
+
+  try {
+    const response = await axios.post("/api/pmoc/gerar-multiplo", {
+      unidade: unidadeSelecionada,
+    });
+
+    alert("PMOCs gerados com sucesso!");
     fetchPmocs();
+  } catch (error: any) {
+    console.error("Erro ao gerar PMOCs:", error);
+    alert("Erro ao gerar PMOCs: " + (error?.response?.data?.error || "Erro desconhecido"));
   }
+}
+
 
   return (
     <div className="flex flex-col pl-[9%] pr-[10%] min-h-screen bg-gray-200 p-4">
@@ -96,49 +107,64 @@ export default function ListaPMOC() {
         <BackButton />
         <h1 className="text-2xl font-bold mb-6">PMOCs Cadastrados</h1>
 
-        <div className="flex flex-wrap items-end gap-4 mb-6">
-          <div>
-            <label className="block text-sm text-gray-700 mb-1 font-semibold">Data Início</label>
-            <input
-              type="date"
-              value={dataInicio}
-              onChange={(e) => setDataInicio(e.target.value)}
-              className="border rounded px-3 py-2 text-sm"
-            />
+        <div className="flex flex-col gap-4 mb-6">
+          {/* Linha de filtros */}
+          <div className="flex flex-wrap items-end gap-4">
+            <div>
+              <label className="block text-sm text-gray-700 mb-1 font-semibold">Data Início</label>
+              <input
+                type="date"
+                value={dataInicio}
+                onChange={(e) => setDataInicio(e.target.value)}
+                className="border rounded px-3 py-2 text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-gray-700 mb-1 font-semibold">Data Fim</label>
+              <input
+                type="date"
+                value={dataFim}
+                onChange={(e) => setDataFim(e.target.value)}
+                className="border rounded px-3 py-2 text-sm"
+              />
+            </div>
+            <button
+              onClick={fetchPmocs}
+              className="bg-blue-800 hover:bg-blue-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center"
+            >
+              Filtrar
+            </button>
           </div>
-          <div>
-            <label className="block text-sm text-gray-700 mb-1 font-semibold">Data Fim</label>
-            <input
-              type="date"
-              value={dataFim}
-              onChange={(e) => setDataFim(e.target.value)}
-              className="border rounded px-3 py-2 text-sm"
-            />
+
+          {/* Linha de geração de PMOCs */}
+          <div className="flex flex-wrap items-end gap-4">
+            <div>
+              <label className="block text-sm text-gray-700 mb-1 font-semibold">
+                Gerar TAG por unidade
+              </label>
+              <select
+                value={unidadeSelecionada}
+                onChange={(e) => setUnidadeSelecionada(e.target.value)}
+                className="border px-3 py-2 text-sm rounded"
+              >
+                <option value="">Selecione a Unidade</option>
+                {unidades.map((u) => (
+                  <option key={u.unidade} value={u.unidade}>{u.unidade}</option>
+                ))}
+              </select>
+            </div>
+            <div className="pt-6">
+              <button
+                onClick={handleGerarPMOCs}
+                disabled={!unidadeSelecionada}
+                className="bg-green-700 hover:bg-green-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center"
+              >
+                Gerar
+              </button>
+            </div>
           </div>
-          <button
-            onClick={fetchPmocs}
-            className="bg-blue-800 hover:bg-blue-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center"
-          >
-            Filtrar
-          </button>
-          <select
-            value={unidadeSelecionada}
-            onChange={(e) => setUnidadeSelecionada(e.target.value)}
-            className="border px-3 py-2 text-sm rounded"
-          >
-            <option value="">Selecione a Unidade</option>
-            {unidades.map((u) => (
-              <option key={u.id} value={u.id}>{u.nome}</option>
-            ))}
-          </select>
-          <button
-            onClick={handleGerarPMOCs}
-            disabled={!unidadeSelecionada}
-            className="bg-green-700 hover:bg-green-600 cursor-pointer text-white font-semibold px-4 py-2 rounded flex items-center"
-          >
-            Gerar
-          </button>
         </div>
+
 
         <div className="overflow-auto">
           <table className="w-full text-md border bg-white shadow-md">
