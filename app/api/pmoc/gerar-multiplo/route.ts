@@ -29,18 +29,9 @@ export async function POST(req: NextRequest) {
       });
     }
 
-
     let totalCriados = 0;
 
     for (const tag of tags) {
-      if (tag.ambienteId === null) continue;
-
-      const ambiente = await prisma.ambiente.findUnique({
-        where: { id: tag.ambienteId },
-      });
-
-      if (!ambiente) continue;
-
       await prisma.pMOC.create({
         data: {
           nomeAmbiente: ambiente.nome,
