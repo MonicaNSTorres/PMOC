@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+/*import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -58,4 +58,4 @@ export async function POST(req: Request) {
     console.error("Erro ao gerar PMOCs múltiplos:", error);
     return NextResponse.json({ error: "Erro interno ao gerar PMOCs." }, { status: 500 });
   }
-}
+}*/
