@@ -51,11 +51,12 @@ export async function POST(req: Request) {
             checklist: {
               create: servicos.map((srv) => ({
                 descricao: srv.nome,
-                periodicidade: "Mensal", // ou outro valor padrão
+                periodicidade: "Mensal", //ou outro valor padrão
+                dataExecucao: new Date(), //aqui adiciona a data atual
               })),
             },
           },
-          include: { checklist: true }, // opcional, só se quiser retornar o checklist junto
+          include: { checklist: true }, //opcional, só se quiser retornar o checklist junto
         });
       })
     );
