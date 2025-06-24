@@ -158,7 +158,7 @@ useEffect(() => {
 
     return (
         <div className="flex flex-col px-4 md:px-[10%] min-h-screen bg-gray-200 p-4">
-            <div className="max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
+            <div className="max-w-7xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
                 <BackButton />
                 <div className="flex justify-between items-center mb-2">
                     <div></div>{/*espaco vazio para alinhar a direita*/}

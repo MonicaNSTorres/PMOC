@@ -63,7 +63,7 @@ export default function ListaAmbientes() {
 
   return (
     <div className="flex flex-col pl-[9%] pr-[10%] min-h-screen bg-gray-200 p-4">
-      <div className="max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
+      <div className="max-w-7xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
         <BackButton />
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold mb-6">Ambientes Cadastrados</h1>
