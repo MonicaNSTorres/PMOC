@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import { config } from "dotenv";
+config(); // <-- carrega o .env antes de tudo
 
 const prisma = new PrismaClient();
 
