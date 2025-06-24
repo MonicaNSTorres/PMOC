@@ -48,7 +48,7 @@ export async function POST(req: Request) {
       await prisma.checklist.createMany({
         data: servicos.map((servico) => ({
           descricao: servico.nome,
-          periodicidade: servico.periodicidade || 'Mensal',
+          periodicidade: 'Mensal',
           data: null,
           executadoPor: '',
           aprovadoPor: '',
