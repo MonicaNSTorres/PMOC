@@ -72,7 +72,6 @@ export async function POST(req: Request) {
             pmocId: novoPMOC.id,
             descricao: srv.nome,
             periodicidade: "Mensal", // padrão
-            dataCadastro: Date.now(),
           })),
         });
 
