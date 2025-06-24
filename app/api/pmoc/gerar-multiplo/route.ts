@@ -1,5 +1,5 @@
 //import { NextRequest, NextResponse } from "next/server";
-import {prisma} from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 //import { prisma } from "@/lib/prisma";
 
@@ -13,11 +13,17 @@ export async function POST(req: Request) {
   try {
     // Buscar TAGs da unidade, com dados do ambiente vinculado
     const tags = await prisma.tag.findMany({
-      where: { unidade },
+      where: {
+        nome: {
+          equals: unidade,
+          mode: "insensitive", // para não dar problema com maiúsculas
+        },
+      },
       include: {
         ambiente: true,
       },
     });
+
 
     if (!tags.length) {
       return NextResponse.json({ error: "Nenhuma TAG encontrada para essa unidade." }, { status: 404 });
@@ -49,8 +55,8 @@ export async function POST(req: Request) {
             },
             ambiente: ambiente?.id
               ? {
-                  connect: { id: ambiente.id },
-                }
+                connect: { id: ambiente.id },
+              }
               : undefined,
           },
         });

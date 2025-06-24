@@ -23,8 +23,8 @@ model Ambiente {
 }
 
 model Tag {
-  id           Int           @id @default(autoincrement())
-  nome String? // com interrogação
+  id        Int           @id @default(autoincrement())
+  nome      String
   unidade   String
   local     String
   tag       String
