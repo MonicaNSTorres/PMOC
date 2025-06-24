@@ -24,16 +24,21 @@ export async function POST(req: Request) {
       },
     });
 
-
     if (!tags.length) {
       return NextResponse.json({ error: "Nenhuma TAG encontrada para essa unidade." }, { status: 404 });
     }
 
+    // Buscar os 10 primeiros serviços existentes
+    const servicos = await prisma.servico.findMany({
+      take: 10,
+      orderBy: { id: "asc" },
+    });
+
     const pmocsCriados = await Promise.all(
-      tags.map((tag) => {
+      tags.map(async (tag) => {
         const ambiente = tag.ambiente;
 
-        return prisma.pMOC.create({
+        const novoPMOC = await prisma.pMOC.create({
           data: {
             nomeAmbiente: ambiente?.nome ?? tag.local ?? "Ambiente sem nome",
             endereco: ambiente?.endereco ?? tag.local ?? "",
@@ -55,11 +60,22 @@ export async function POST(req: Request) {
             },
             ambiente: ambiente?.id
               ? {
-                connect: { id: ambiente.id },
-              }
+                  connect: { id: ambiente.id },
+                }
               : undefined,
           },
         });
+
+        // Criar checklists com os serviços
+        await prisma.checklist.createMany({
+          data: servicos.map((srv) => ({
+            pmocId: novoPMOC.id,
+            descricao: srv.nome,
+            periodicidade: "Mensal", // padrão
+          })),
+        });
+
+        return novoPMOC;
       })
     );
 
