@@ -35,8 +35,8 @@ export async function POST(req: Request) {
 
         return prisma.pMOC.create({
           data: {
-            nomeAmbiente: ambiente?.nome ?? tag.nome ?? "Ambiente sem nome",
-            endereco: ambiente?.endereco ?? "",
+            nomeAmbiente: ambiente?.nome ?? tag.local ?? "Ambiente sem nome",
+            endereco: ambiente?.endereco ?? tag.local ?? "",
             numero: ambiente?.numero ?? "",
             bairro: ambiente?.bairro ?? "",
             cidade: ambiente?.cidade ?? "",
