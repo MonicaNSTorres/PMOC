@@ -11,19 +11,17 @@ export async function POST(req: Request) {
   }
 
   try {
-    // Buscar TAGs da unidade, com dados do ambiente vinculado
     const tags = await prisma.tag.findMany({
       where: {
         nome: {
           equals: unidade,
-          mode: "insensitive", // para não dar problema com maiúsculas
+          mode: "insensitive",
         },
       },
       include: {
         ambiente: true,
       },
     });
-
 
     if (!tags.length) {
       return NextResponse.json({ error: "Nenhuma TAG encontrada para essa unidade." }, { status: 404 });
@@ -55,9 +53,20 @@ export async function POST(req: Request) {
             },
             ambiente: ambiente?.id
               ? {
-                connect: { id: ambiente.id },
-              }
+                  connect: { id: ambiente.id },
+                }
               : undefined,
+
+            // 🔽 Adicionando 10 itens de checklist pré-preenchidos
+            checklist: {
+              create: Array.from({ length: 10 }).map((_, index) => ({
+                descricao: `Serviço ${index + 1}`,
+                periodicidade: "Mensal",
+                dataExecucao: null,
+                executadoPor: "",
+                aprovadoPor: "",
+              })),
+            },
           },
         });
       })
