@@ -19,6 +19,7 @@ export async function PUT(req: NextRequest) {
         tag: body.tag,
         unidade: body.unidade,
         local: body.local,
+        nome: body.nome, // <- Campo obrigatório agora
       },
     });
 

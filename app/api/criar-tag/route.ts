@@ -6,9 +6,9 @@ const prisma = new PrismaClient();
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { tag, unidade, local } = body;
+    const { tag, unidade, local, nome } = body;
 
-    if (!tag || !unidade || !local) {
+    if (!tag || !unidade || !local || !nome) {
       return NextResponse.json({ error: "Campos obrigatórios faltando." }, { status: 400 });
     }
 
@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
         tag,
         unidade,
         local,
+        nome,
       },
     });
 
