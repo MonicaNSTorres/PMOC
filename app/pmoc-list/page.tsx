@@ -191,7 +191,7 @@ export default function ListaPMOC() {
                   <td className="border p-2">{pmoc.ambiente?.nome || pmoc.nomeAmbiente}</td>
                   <td className="border p-2">{pmoc.cidade}</td>
                   <td className="border p-2">{new Date(pmoc.criadoEm).toLocaleDateString()}</td>
-                  <td className="border p-2 flex items-center justify-center gap-2">
+                  <td className="p-2 pt-3 flex items-center justify-center gap-2">
                     <button
                       onClick={() => abrirEdicao(pmoc)}
                       className="text-blue-800 hover:text-blue-600 cursor-pointer"
